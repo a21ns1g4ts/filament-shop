@@ -46,6 +46,7 @@ class ProductsRelationManager extends RelationManager
             ])
             ->groupedBulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-            ]);
+            ])
+            ->defaultSort('product_id');
     }
 }
