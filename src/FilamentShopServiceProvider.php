@@ -2,6 +2,8 @@
 
 namespace A21ns1g4ts\FilamentShop;
 
+use A21ns1g4ts\FilamentShop\Commands\FilamentShopCommand;
+use A21ns1g4ts\FilamentShop\Testing\TestsFilamentShop;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
@@ -13,8 +15,6 @@ use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use A21ns1g4ts\FilamentShop\Commands\FilamentShopCommand;
-use A21ns1g4ts\FilamentShop\Testing\TestsFilamentShop;
 
 class FilamentShopServiceProvider extends PackageServiceProvider
 {
