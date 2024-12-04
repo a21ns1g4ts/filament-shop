@@ -166,7 +166,7 @@ class ProductResource extends Resource
                         Forms\Components\Section::make('Meta')
                             ->schema([
                                 Forms\Components\KeyValue::make('meta')
-                                    ->label('')
+                                    ->label(''),
                             ]),
 
                         Forms\Components\Section::make('Shipping')
