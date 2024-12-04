@@ -2,9 +2,6 @@
 
 namespace A21ns1g4ts\FilamentShop;
 
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\BrandResource;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\CategoryResource;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\ProductResource;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
