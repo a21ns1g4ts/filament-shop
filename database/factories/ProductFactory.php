@@ -3,10 +3,8 @@
 namespace Database\Factories\Shop;
 
 use A21ns1g4ts\FilamentShop\Models\Product;
-use Database\Seeders\LocalImages;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\UnreachableUrl;
 
 class ProductFactory extends Factory
 {

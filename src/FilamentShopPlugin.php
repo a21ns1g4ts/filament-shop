@@ -23,7 +23,6 @@ class FilamentShopPlugin implements Plugin
         //     BrandResource::class,
         // ]);
 
-
         $panel->discoverClusters(in: __DIR__ . '/Filament/Clusters', for: 'A21ns1g4ts\FilamentShop\Filament\Clusters');
     }
 
