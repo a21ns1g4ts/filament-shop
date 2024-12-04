@@ -153,14 +153,14 @@ class ProductResource extends Resource
                                 Forms\Components\Select::make('brand_id')
                                     ->relationship('brand', 'name')
                                     ->preload()
-                                    ->searchable()
-                                    ->hiddenOn(ProductsRelationManager::class),
+                                    ->searchable(),
 
                                 Forms\Components\Select::make('categories')
                                     ->relationship('categories', 'name')
                                     ->preload()
                                     ->multiple()
-                                    ->required(),
+                                    ->required()
+                                    ->hiddenOn(ProductsRelationManager::class),
                             ]),
 
                         Forms\Components\Section::make('Meta')
