@@ -130,16 +130,6 @@ class ProductResource extends Resource
                                     ->required(),
                             ])
                             ->columns(2),
-
-                        Forms\Components\Section::make('Shipping')
-                            ->schema([
-                                Forms\Components\Checkbox::make('backorder')
-                                    ->label('This product can be returned'),
-
-                                Forms\Components\Checkbox::make('requires_shipping')
-                                    ->label('This product will be shipped'),
-                            ])
-                            ->columns(2),
                     ])
                     ->columnSpan(['lg' => 2]),
 
@@ -171,6 +161,21 @@ class ProductResource extends Resource
                                     ->preload()
                                     ->multiple()
                                     ->required(),
+                            ]),
+
+                        Forms\Components\Section::make('Meta')
+                            ->schema([
+                                Forms\Components\KeyValue::make('meta')
+                                    ->label('')
+                            ]),
+
+                        Forms\Components\Section::make('Shipping')
+                            ->schema([
+                                Forms\Components\Checkbox::make('backorder')
+                                    ->label('This product can be returned'),
+
+                                Forms\Components\Checkbox::make('requires_shipping')
+                                    ->label('This product will be shipped'),
                             ]),
                     ])
                     ->columnSpan(['lg' => 1]),
