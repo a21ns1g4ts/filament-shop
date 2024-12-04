@@ -21,6 +21,7 @@ class Product extends Model implements HasMedia
 
     protected $fillable = [
         'name',
+        'meta',
         'slug',
         'sku',
         'barcode',
@@ -50,6 +51,7 @@ class Product extends Model implements HasMedia
      * @var array<string, string>
      */
     protected $casts = [
+        'meta' => 'array',
         'featured' => 'boolean',
         'is_visible' => 'boolean',
         'backorder' => 'boolean',

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('filament_shop_products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('brand_id')->nullable()->constrained()->nullOnDelete();
+            $table->json('meta')->nullable();
             $table->string('name');
             $table->string('slug')->unique()->nullable();
             $table->string('sku')->unique()->nullable();

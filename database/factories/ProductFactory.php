@@ -14,6 +14,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $name = $this->faker->text(),
+            'meta' => ['foo' => 'bar'],
             'slug' => Str::slug($name),
             'sku' => $this->faker->unique()->ean8(),
             'barcode' => $this->faker->ean13(),
