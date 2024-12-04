@@ -2,6 +2,9 @@
 
 namespace A21ns1g4ts\FilamentShop;
 
+use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\BrandResource;
+use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\CategoryResource;
+use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\ProductResource;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
@@ -14,7 +17,14 @@ class FilamentShopPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        //
+        // $panel->resources([
+        //     CategoryResource::class,
+        //     ProductResource::class,
+        //     BrandResource::class,
+        // ]);
+
+
+        $panel->discoverClusters(in: __DIR__ . '/Filament/Clusters', for: 'A21ns1g4ts\FilamentShop\Filament\Clusters');
     }
 
     public function boot(Panel $panel): void

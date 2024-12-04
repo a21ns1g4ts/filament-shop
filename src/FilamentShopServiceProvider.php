@@ -53,9 +53,9 @@ class FilamentShopServiceProvider extends PackageServiceProvider
             $package->hasTranslations();
         }
 
-        if (file_exists($package->basePath('/../resources/views'))) {
-            $package->hasViews(static::$viewNamespace);
-        }
+        // if (file_exists($package->basePath('/../resources/views'))) {
+        //     $package->hasViews(static::$viewNamespace);
+        // }
     }
 
     public function packageRegistered(): void {}
@@ -101,8 +101,8 @@ class FilamentShopServiceProvider extends PackageServiceProvider
     {
         return [
             // AlpineComponent::make('filament-shop', __DIR__ . '/../resources/dist/components/filament-shop.js'),
-            Css::make('filament-shop-styles', __DIR__ . '/../resources/dist/filament-shop.css'),
-            Js::make('filament-shop-scripts', __DIR__ . '/../resources/dist/filament-shop.js'),
+            // Css::make('filament-shop-styles', __DIR__ . '/../resources/dist/filament-shop.css'),
+            // Js::make('filament-shop-scripts', __DIR__ . '/../resources/dist/filament-shop.js'),
         ];
     }
 
@@ -146,7 +146,10 @@ class FilamentShopServiceProvider extends PackageServiceProvider
     protected function getMigrations(): array
     {
         return [
-            'create_filament-shop_table',
+            'create_filament_shop_categories_table.stub',
+            'create_filament_shop_brands_table.stub',
+            'create_filament_shop_products_table.stub',
+            'create_filament_shop_category_product_table.stub',
         ];
     }
 }
