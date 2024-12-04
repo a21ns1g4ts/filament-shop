@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace A21ns1g4ts\FilamentShop\Database\Factories;
 
 use A21ns1g4ts\FilamentShop\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
