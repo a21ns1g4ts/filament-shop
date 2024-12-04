@@ -8,15 +8,12 @@ use Illuminate\Support\Str;
 
 class ProductFactory extends Factory
 {
-    /**
-     * @var string
-     */
     protected $model = Product::class;
 
     public function definition(): array
     {
         return [
-            'name' => $name = $this->faker->unique()->catchPhrase(),
+            'name' => $name = $this->faker->text(),
             'slug' => Str::slug($name),
             'sku' => $this->faker->unique()->ean8(),
             'barcode' => $this->faker->ean13(),

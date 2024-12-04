@@ -8,9 +8,6 @@ use Illuminate\Support\Str;
 
 class CategoryFactory extends Factory
 {
-    /**
-     * @var string
-     */
     protected $model = Category::class;
 
     public function definition(): array

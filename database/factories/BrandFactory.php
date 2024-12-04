@@ -8,9 +8,6 @@ use Illuminate\Support\Str;
 
 class BrandFactory extends Factory
 {
-    /**
-     * @var string
-     */
     protected $model = Brand::class;
 
     public function definition(): array
