@@ -27,12 +27,12 @@ class CategoryImporter extends Importer
                 ->example('Category B'),
             ImportColumn::make('description')
                 ->example('This is the description for Category A.'),
-            ImportColumn::make('position')
+            ImportColumn::make('sort')
                 ->requiredMapping()
                 ->numeric()
                 ->rules(['required', 'integer'])
                 ->example('1'),
-            ImportColumn::make('is_visible')
+            ImportColumn::make('visible')
                 ->label('Visibility')
                 ->requiredMapping()
                 ->boolean()

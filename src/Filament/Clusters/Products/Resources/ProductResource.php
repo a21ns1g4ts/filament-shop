@@ -137,7 +137,7 @@ class ProductResource extends Resource
                     ->schema([
                         Forms\Components\Section::make('Status')
                             ->schema([
-                                Forms\Components\Toggle::make('is_visible')
+                                Forms\Components\Toggle::make('visible')
                                     ->label('Visible')
                                     ->helperText('This product will be hidden from all sales channels.')
                                     ->default(true),
@@ -201,7 +201,7 @@ class ProductResource extends Resource
                     ->sortable()
                     ->toggleable(),
 
-                Tables\Columns\IconColumn::make('is_visible')
+                Tables\Columns\IconColumn::make('visible')
                     ->label('Visibility')
                     ->sortable()
                     ->toggleable(),
@@ -257,7 +257,7 @@ class ProductResource extends Resource
                         NumberConstraint::make('qty')
                             ->label('Quantity'),
                         NumberConstraint::make('security_stock'),
-                        BooleanConstraint::make('is_visible')
+                        BooleanConstraint::make('visible')
                             ->label('Visibility'),
                         BooleanConstraint::make('featured'),
                         BooleanConstraint::make('backorder'),

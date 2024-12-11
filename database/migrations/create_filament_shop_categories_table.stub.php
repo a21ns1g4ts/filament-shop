@@ -19,10 +19,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->longText('description')->nullable();
-            $table->unsignedSmallInteger('position')->default(0);
-            $table->boolean('is_visible')->default(false);
+            $table->boolean('active')->default(false);
+            $table->boolean('visible')->default(false);
             $table->string('seo_title', 60)->nullable();
             $table->string('seo_description', 160)->nullable();
+            $table->integer('sort')->nullable();
             $table->timestamps();
         });
     }

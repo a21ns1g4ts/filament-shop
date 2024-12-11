@@ -60,7 +60,7 @@ class BrandResource extends Resource
                             ->maxLength(255)
                             ->url(),
 
-                        Forms\Components\Toggle::make('is_visible')
+                        Forms\Components\Toggle::make('visible')
                             ->label('Visible to customers.')
                             ->default(true),
 
@@ -98,7 +98,7 @@ class BrandResource extends Resource
                     ->label('Website')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_visible')
+                Tables\Columns\IconColumn::make('visible')
                     ->label('Visibility')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')

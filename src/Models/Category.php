@@ -2,6 +2,7 @@
 
 namespace A21ns1g4ts\FilamentShop\Models;
 
+use A21ns1g4ts\FilamentShop\Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,18 +25,23 @@ class Category extends Model implements HasMedia
         'name',
         'slug',
         'description',
-        'position',
-        'is_visible',
+        'active',
+        'visible',
         'seo_title',
         'seo_description',
+        'sort',
     ];
 
     /**
      * @var array<string, string>
      */
     protected $casts = [
-        'is_visible' => 'boolean',
+        'active' => 'boolean',
+        'visible' => 'boolean',
+        'sort' => 'integer',
     ];
+
+    protected static $factory = CategoryFactory::class;
 
     /** @return HasMany<Category> */
     public function children(): HasMany

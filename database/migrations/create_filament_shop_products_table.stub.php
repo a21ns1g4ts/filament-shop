@@ -25,7 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('qty')->default(0);
             $table->unsignedBigInteger('security_stock')->default(0);
             $table->boolean('featured')->default(false);
-            $table->boolean('is_visible')->default(false);
+            $table->boolean('visible')->default(false);
             $table->decimal('old_price', 10, 2)->nullable();
             $table->decimal('price', 10, 2)->nullable();
             $table->decimal('cost', 10, 2)->nullable();

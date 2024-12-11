@@ -64,7 +64,7 @@ class CategoryResource extends Resource
                             ->searchable()
                             ->placeholder('Select parent category'),
 
-                        Forms\Components\Toggle::make('is_visible')
+                        Forms\Components\Toggle::make('visible')
                             ->label('Visible to customers.')
                             ->default(true),
 
@@ -102,7 +102,7 @@ class CategoryResource extends Resource
                     ->label('Parent')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_visible')
+                Tables\Columns\IconColumn::make('visible')
                     ->label('Visibility')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
@@ -124,7 +124,9 @@ class CategoryResource extends Resource
                             ->warning()
                             ->send();
                     }),
-            ]);
+            ])
+            ->defaultSort('sort')
+            ->reorderable('sort');
     }
 
     public static function getRelations(): array

@@ -2,6 +2,7 @@
 
 namespace A21ns1g4ts\FilamentShop\Models;
 
+use A21ns1g4ts\FilamentShop\Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,7 +30,7 @@ class Product extends Model implements HasMedia
         'qty',
         'security_stock',
         'featured',
-        'is_visible',
+        'visible',
         'old_price',
         'price',
         'cost',
@@ -53,11 +54,13 @@ class Product extends Model implements HasMedia
     protected $casts = [
         'meta' => 'array',
         'featured' => 'boolean',
-        'is_visible' => 'boolean',
+        'visible' => 'boolean',
         'backorder' => 'boolean',
         'requires_shipping' => 'boolean',
         'published_at' => 'date',
     ];
+
+    protected static $factory = ProductFactory::class;
 
     /** @return BelongsTo<Brand,self> */
     public function brand(): BelongsTo

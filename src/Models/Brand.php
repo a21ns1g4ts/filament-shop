@@ -2,6 +2,7 @@
 
 namespace A21ns1g4ts\FilamentShop\Models;
 
+use A21ns1g4ts\FilamentShop\Database\Factories\BrandFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -23,8 +24,8 @@ class Brand extends Model implements HasMedia
         'slug',
         'website',
         'description',
-        'position',
-        'is_visible',
+        'visible',
+        'sort',
         'seo_title',
         'seo_description',
         'sort',
@@ -34,8 +35,11 @@ class Brand extends Model implements HasMedia
      * @var array<string, string>
      */
     protected $casts = [
-        'is_visible' => 'boolean',
+        'active' => 'boolean',
+        'visible' => 'boolean',
     ];
+
+    protected static $factory = BrandFactory::class;
 
     /** @return HasMany<Product> */
     public function products(): HasMany
