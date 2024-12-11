@@ -33,8 +33,8 @@ return new class extends Migration
             $table->boolean('backorder')->default(false);
             $table->boolean('requires_shipping')->default(false);
             $table->date('published_at')->nullable();
-            $table->string('seo_title', 60)->nullable();
-            $table->string('seo_description', 160)->nullable();
+            $table->string('seo_title')->nullable();
+            $table->text('seo_description')->nullable();
             $table->decimal('weight_value', 10, 2)->nullable()
                 ->default(0.00)
                 ->unsigned();
