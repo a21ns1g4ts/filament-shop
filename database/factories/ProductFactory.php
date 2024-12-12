@@ -13,7 +13,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $name = $this->faker->text(),
+            'name' => $name = $this->faker->unique()->words(3, true),
             'meta' => ['foo' => 'bar'],
             'slug' => Str::slug($name),
             'sku' => $this->faker->unique()->ean8(),
@@ -27,6 +27,8 @@ class ProductFactory extends Factory
             'price' => $this->faker->randomFloat(2, 80, 400),
             'cost' => $this->faker->randomFloat(2, 50, 200),
             'type' => $this->faker->randomElement(['deliverable', 'downloadable']),
+            'seo_title' => $this->faker->sentence(),
+            'seo_description' => $this->faker->realText(),
             'published_at' => $this->faker->dateTimeBetween('-1 year', '+1 year'),
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
             'updated_at' => $this->faker->dateTimeBetween('-5 month', 'now'),

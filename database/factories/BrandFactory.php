@@ -17,7 +17,11 @@ class BrandFactory extends Factory
             'slug' => Str::slug($name),
             'website' => 'https://www.' . $this->faker->domainName(),
             'description' => $this->faker->realText(),
+            'active' => $this->faker->boolean(),
             'visible' => $this->faker->boolean(),
+            'sort' => $this->faker->randomNumber(),
+            'seo_title' => $this->faker->sentence(),
+            'seo_description' => $this->faker->realText(),
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
             'updated_at' => $this->faker->dateTimeBetween('-5 month', 'now'),
         ];

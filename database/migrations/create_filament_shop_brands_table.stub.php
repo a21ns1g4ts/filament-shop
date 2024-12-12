@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('website')->nullable();
             $table->longText('description')->nullable();
-            $table->unsignedSmallInteger('sort')->default(0);
+            $table->boolean('active')->default(false);
             $table->boolean('visible')->default(false);
             $table->string('seo_title')->nullable();
             $table->text('seo_description')->nullable();

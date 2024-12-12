@@ -24,6 +24,7 @@ class Brand extends Model implements HasMedia
         'slug',
         'website',
         'description',
+        'active',
         'visible',
         'sort',
         'seo_title',
