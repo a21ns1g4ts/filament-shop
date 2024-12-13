@@ -1,7 +1,5 @@
 <?php
 
-use A21ns1g4ts\FilamentShop\Models\Product;
-
 return [
     'tenant_scope' => false,
     'products' => [
