@@ -19,8 +19,6 @@ use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
 {
-    protected static ?string $model = Category::class;
-
     protected static ?string $cluster = Products::class;
 
     protected static ?string $recordTitleAttribute = 'name';
@@ -30,6 +28,11 @@ class CategoryResource extends Resource
     protected static ?string $navigationParentItem = 'Products';
 
     protected static ?int $navigationSort = 1;
+
+    public static function getModel(): string
+    {
+        return config('filament-shop.categories.model');
+    }
 
     public static function isScopedToTenant(): bool
     {

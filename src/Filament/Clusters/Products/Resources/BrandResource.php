@@ -18,8 +18,6 @@ use Illuminate\Support\Str;
 
 class BrandResource extends Resource
 {
-    protected static ?string $model = Brand::class;
-
     protected static ?string $cluster = Products::class;
 
     protected static ?string $recordTitleAttribute = 'name';
@@ -29,6 +27,11 @@ class BrandResource extends Resource
     protected static ?string $navigationParentItem = 'Products';
 
     protected static ?int $navigationSort = 2;
+
+    public static function getModel(): string
+    {
+        return config('filament-shop.brands.model');
+    }
 
     public static function isScopedToTenant(): bool
     {

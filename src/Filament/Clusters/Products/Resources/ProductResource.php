@@ -27,8 +27,6 @@ use Illuminate\Support\Str;
 
 class ProductResource extends Resource
 {
-    protected static ?string $model = Product::class;
-
     protected static ?string $cluster = Products::class;
 
     protected static ?string $recordTitleAttribute = 'name';
@@ -38,6 +36,11 @@ class ProductResource extends Resource
     protected static ?string $navigationLabel = 'Products';
 
     protected static ?int $navigationSort = 0;
+
+    public static function getModel(): string
+    {
+        return config('filament-shop.products.model');
+    }
 
     public static function isScopedToTenant(): bool
     {
@@ -323,12 +326,11 @@ class ProductResource extends Resource
         return parent::getGlobalSearchEloquentQuery()->with(['brand']);
     }
 
-    // TODO: Tenant issue
-    // public static function getNavigationBadge(): ?string
-    // {
-    //     /** @var class-string<Model> $modelClass */
-    //     $modelClass = static::$model;
+    public static function getNavigationBadge(): ?string
+    {
+        /** @var class-string<Model> $modelClass */
+        $modelClass = static::$model;
 
-    //     return (string) $modelClass::whereColumn('qty', '<', 'security_stock')->count();
-    // }
+        return (string) $modelClass::whereColumn('qty', '<', 'security_stock')->count();
+    }
 }

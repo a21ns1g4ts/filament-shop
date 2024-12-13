@@ -9,8 +9,6 @@ use Filament\Actions\Exports\Models\Export;
 
 class BrandExporter extends Exporter
 {
-    protected static ?string $model = Brand::class;
-
     public static function getColumns(): array
     {
         return [
@@ -33,5 +31,14 @@ class BrandExporter extends Exporter
         }
 
         return $body;
+    }
+
+
+    /**
+     * @return class-string<Model>
+     */
+    public static function getModel(): string
+    {
+        return config('filament-shop.brands.model');
     }
 }

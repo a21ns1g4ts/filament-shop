@@ -9,8 +9,6 @@ use Filament\Actions\Imports\Models\Import;
 
 class CategoryImporter extends Importer
 {
-    protected static ?string $model = Category::class;
-
     public static function getColumns(): array
     {
         return [
@@ -65,5 +63,13 @@ class CategoryImporter extends Importer
         }
 
         return $body;
+    }
+
+    /**
+     * @return class-string<Model>
+     */
+    public static function getModel(): string
+    {
+        return config('filament-shop.categories.model');
     }
 }
