@@ -83,6 +83,8 @@ class ProductResource extends Resource
                             ->schema([
                                 SpatieMediaLibraryFileUpload::make('media')
                                     ->collection('product-images')
+                                    ->acceptedFileTypes(['image/*'])
+                                    ->reorderable()
                                     ->multiple()
                                     ->maxFiles(5)
                                     ->hiddenLabel(),
