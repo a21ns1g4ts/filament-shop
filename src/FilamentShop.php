@@ -2,7 +2,8 @@
 
 namespace A21ns1g4ts\FilamentShop;
 
-class FilamentShop {
+class FilamentShop
+{
     public static function getProductModel(): string
     {
         return config('filament-shop.products.model');

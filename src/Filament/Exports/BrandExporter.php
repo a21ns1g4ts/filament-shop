@@ -2,7 +2,6 @@
 
 namespace A21ns1g4ts\FilamentShop\Filament\Exports;
 
-use A21ns1g4ts\FilamentShop\Models\Brand;
 use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Actions\Exports\Models\Export;
@@ -32,7 +31,6 @@ class BrandExporter extends Exporter
 
         return $body;
     }
-
 
     /**
      * @return class-string<Model>
