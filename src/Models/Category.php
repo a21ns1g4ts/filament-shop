@@ -3,6 +3,7 @@
 namespace A21ns1g4ts\FilamentShop\Models;
 
 use A21ns1g4ts\FilamentShop\Database\Factories\CategoryFactory;
+use A21ns1g4ts\FilamentShop\FilamentShop;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -46,18 +47,18 @@ class Category extends Model implements HasMedia
     /** @return HasMany<Category> */
     public function children(): HasMany
     {
-        return $this->hasMany(Category::class, 'parent_id');
+        return $this->hasMany(FilamentShop::getCategoryModel(), 'parent_id');
     }
 
     /** @return BelongsTo<Category,self> */
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'parent_id');
+        return $this->belongsTo(FilamentShop::getCategoryModel(), 'parent_id');
     }
 
     /** @return BelongsToMany<Product> */
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'filament_shop_category_product', 'category_id', 'product_id');
+        return $this->belongsToMany(FilamentShop::getProductModel(), 'filament_shop_category_product', 'category_id', 'product_id');
     }
 }

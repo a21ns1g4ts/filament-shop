@@ -3,6 +3,7 @@
 namespace A21ns1g4ts\FilamentShop\Models;
 
 use A21ns1g4ts\FilamentShop\Database\Factories\ProductFactory;
+use A21ns1g4ts\FilamentShop\FilamentShop;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -65,12 +66,12 @@ class Product extends Model implements HasMedia
     /** @return BelongsTo<Brand,self> */
     public function brand(): BelongsTo
     {
-        return $this->belongsTo(Brand::class, 'brand_id');
+        return $this->belongsTo(FilamentShop::getBrandModel(), 'brand_id');
     }
 
     /** @return BelongsToMany<Category> */
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'filament_shop_category_product', 'product_id', 'category_id')->withTimestamps();
+        return $this->belongsToMany(FilamentShop::getCategoryModel(), 'filament_shop_category_product', 'product_id', 'category_id')->withTimestamps();
     }
 }

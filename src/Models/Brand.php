@@ -3,6 +3,7 @@
 namespace A21ns1g4ts\FilamentShop\Models;
 
 use A21ns1g4ts\FilamentShop\Database\Factories\BrandFactory;
+use A21ns1g4ts\FilamentShop\FilamentShop;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -45,6 +46,6 @@ class Brand extends Model implements HasMedia
     /** @return HasMany<Product> */
     public function products(): HasMany
     {
-        return $this->hasMany(Product::class, 'brand_id');
+        return $this->hasMany(FilamentShop::getProductModel(), 'brand_id');
     }
 }
