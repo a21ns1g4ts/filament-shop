@@ -329,7 +329,7 @@ class ProductResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         /** @var class-string<Model> $modelClass */
-        $modelClass = static::$model;
+        $modelClass = static::getModel();
 
         return (string) $modelClass::whereColumn('qty', '<', 'security_stock')->count();
     }
