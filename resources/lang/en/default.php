@@ -32,7 +32,7 @@ return [
             'updated_at' => [
                 'label' => 'Last modified at',
             ],
-        ]
+        ],
     ],
 
     'brands' => [
@@ -60,8 +60,8 @@ return [
             ],
             'updated_at' => [
                 'label' => 'Last modified at',
-            ]
-        ]
+            ],
+        ],
     ],
 
     'products' => [
@@ -130,7 +130,7 @@ return [
             'published_at' => [
                 'label' => 'Available on',
                 'helper_text' => 'This product will be available from this date.',
-            ]
+            ],
         ],
 
         'associations' => [
@@ -160,6 +160,6 @@ return [
                     'label' => 'Average price',
                 ],
             ],
-        ]
-    ]
+        ],
+    ],
 ];

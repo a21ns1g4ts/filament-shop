@@ -62,7 +62,7 @@ class CategoryResource extends Resource
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
                                 Forms\Components\TextInput::make('slug')
                                     ->label(__('filament-shop::default.categories.main.slug.label'))
@@ -74,7 +74,7 @@ class CategoryResource extends Resource
 
                         Forms\Components\Select::make('parent_id')
                             ->label(__('filament-shop::default.categories.main.parent.label'))
-                            ->relationship('parent', 'name', fn(Builder $query) => $query->where('parent_id', null), ignoreRecord: true)
+                            ->relationship('parent', 'name', fn (Builder $query) => $query->where('parent_id', null), ignoreRecord: true)
                             ->preload()
                             ->searchable()
                             ->placeholder(__('filament-shop::default.categories.main.parent.placeholder')),
@@ -86,21 +86,21 @@ class CategoryResource extends Resource
                         Forms\Components\MarkdownEditor::make('description')
                             ->label(__('filament-shop::default.categories.main.description.label')),
                     ])
-                    ->columnSpan(['lg' => fn(?Category $record) => $record === null ? 3 : 2]),
+                    ->columnSpan(['lg' => fn (?Category $record) => $record === null ? 3 : 2]),
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Placeholder::make('created_at')
                             ->label(__('filament-shop::default.categories.main.created_at.label'))
                             // @phpstan-ignore-next-line
-                            ->content(fn(Category $record): ?string => $record->created_at?->diffForHumans()),
+                            ->content(fn (Category $record): ?string => $record->created_at?->diffForHumans()),
 
                         Forms\Components\Placeholder::make('updated_at')
                             ->label(__('filament-shop::default.categories.main.updated_at.label'))
                             // @phpstan-ignore-next-line
-                            ->content(fn(Category $record): ?string => $record->updated_at?->diffForHumans()),
+                            ->content(fn (Category $record): ?string => $record->updated_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])
-                    ->hidden(fn(?Category $record) => $record === null),
+                    ->hidden(fn (?Category $record) => $record === null),
             ])
             ->columns(3);
     }

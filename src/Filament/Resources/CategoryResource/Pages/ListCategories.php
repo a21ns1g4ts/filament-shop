@@ -2,8 +2,8 @@
 
 namespace A21ns1g4ts\FilamentShop\Filament\Resources\CategoryResource\Pages;
 
-use A21ns1g4ts\FilamentShop\Filament\Resources\CategoryResource;
 use A21ns1g4ts\FilamentShop\Filament\Imports\CategoryImporter;
+use A21ns1g4ts\FilamentShop\Filament\Resources\CategoryResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 

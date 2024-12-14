@@ -70,7 +70,7 @@ class ProductResource extends Resource
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
                                 Forms\Components\TextInput::make('slug')
                                     ->label(__('filament-shop::default.products.main.slug.label'))
@@ -195,7 +195,7 @@ class ProductResource extends Resource
                             ->label(__('filament-shop::default.products.meta.label'))
                             ->schema([
                                 Forms\Components\KeyValue::make('meta')
-                                    ->label(__('filament-shop::default.products.meta.label'))
+                                    ->label(__('filament-shop::default.products.meta.label')),
                             ]),
                     ])
                     ->columnSpan(['lg' => 1]),

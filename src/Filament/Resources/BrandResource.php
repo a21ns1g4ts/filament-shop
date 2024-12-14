@@ -61,7 +61,7 @@ class BrandResource extends Resource
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
                                 Forms\Components\TextInput::make('slug')
                                     ->label(__('filament-shop::default.brands.main.slug.label'))
@@ -82,21 +82,21 @@ class BrandResource extends Resource
                         Forms\Components\MarkdownEditor::make('description')
                             ->label(__('filament-shop::default.brands.main.description.label')),
                     ])
-                    ->columnSpan(['lg' => fn(?Brand $record) => $record === null ? 3 : 2]),
+                    ->columnSpan(['lg' => fn (?Brand $record) => $record === null ? 3 : 2]),
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Placeholder::make('created_at')
                             ->label(__('filament-shop::default.brands.main.created_at.label'))
                             // @phpstan-ignore-next-line
-                            ->content(fn(Brand $record): ?string => $record?->created_at?->diffForHumans()),
+                            ->content(fn (Brand $record): ?string => $record?->created_at?->diffForHumans()),
 
                         Forms\Components\Placeholder::make('updated_at')
                             ->label(__('filament-shop::default.brands.main.updated_at.label'))
                             // @phpstan-ignore-next-line
-                            ->content(fn(Brand $record): ?string => $record?->updated_at?->diffForHumans()),
+                            ->content(fn (Brand $record): ?string => $record?->updated_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])
-                    ->hidden(fn(?Brand $record) => $record === null),
+                    ->hidden(fn (?Brand $record) => $record === null),
             ])
             ->columns(3);
     }
