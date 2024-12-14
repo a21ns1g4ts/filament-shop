@@ -1,8 +1,8 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\BrandResource\RelationManagers;
+namespace A21ns1g4ts\FilamentShop\Filament\Resources\CategoryResource\RelationManagers;
 
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\ProductResource;
+use A21ns1g4ts\FilamentShop\Filament\Resources\ProductResource;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;

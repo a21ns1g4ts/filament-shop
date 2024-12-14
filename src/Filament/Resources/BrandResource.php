@@ -1,12 +1,11 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources;
+namespace A21ns1g4ts\FilamentShop\Filament\Resources;
 
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\BrandResource\Pages\CreateBrand;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\BrandResource\Pages\EditBrand;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\BrandResource\Pages\ListBrands;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\CategoryResource\RelationManagers\ProductsRelationManager;
+use A21ns1g4ts\FilamentShop\Filament\Resources\BrandResource\Pages\CreateBrand;
+use A21ns1g4ts\FilamentShop\Filament\Resources\BrandResource\Pages\EditBrand;
+use A21ns1g4ts\FilamentShop\Filament\Resources\BrandResource\Pages\ListBrands;
+use A21ns1g4ts\FilamentShop\Filament\Resources\CategoryResource\RelationManagers\ProductsRelationManager;
 use A21ns1g4ts\FilamentShop\Models\Brand;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -18,15 +17,26 @@ use Illuminate\Support\Str;
 
 class BrandResource extends Resource
 {
-    protected static ?string $cluster = Products::class;
-
     protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?string $navigationIcon = 'heroicon-o-bookmark-square';
 
-    protected static ?string $navigationParentItem = 'Products';
-
     protected static ?int $navigationSort = 2;
+
+    public static function getModelLabel(): string
+    {
+        return __('filament-shop::default.brands.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament-shop::default.brands.plural_model_label');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament-shop::default.brands.navigation_label');
+    }
 
     public static function getModel(): string
     {
@@ -47,44 +57,46 @@ class BrandResource extends Resource
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name')
+                                    ->label(__('filament-shop::default.brands.main.name.label'))
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                                    ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
                                 Forms\Components\TextInput::make('slug')
+                                    ->label(__('filament-shop::default.brands.main.slug.label'))
                                     ->disabled()
                                     ->dehydrated()
                                     ->required()
-                                    ->maxLength(255)
-                                    ->unique(Brand::class, 'slug', ignoreRecord: true),
+                                    ->maxLength(255),
                             ]),
                         Forms\Components\TextInput::make('website')
+                            ->label(__('filament-shop::default.brands.main.website.label'))
                             ->maxLength(255)
                             ->url(),
 
                         Forms\Components\Toggle::make('visible')
-                            ->label('Visible to customers.')
+                            ->label(__('filament-shop::default.brands.main.visible.label'))
                             ->default(true),
 
                         Forms\Components\MarkdownEditor::make('description')
-                            ->label('Description'),
+                            ->label(__('filament-shop::default.brands.main.description.label')),
                     ])
-                    ->columnSpan(['lg' => fn (?Brand $record) => $record === null ? 3 : 2]),
+                    ->columnSpan(['lg' => fn(?Brand $record) => $record === null ? 3 : 2]),
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Placeholder::make('created_at')
-                            ->label('Created at')
+                            ->label(__('filament-shop::default.brands.main.created_at.label'))
                             // @phpstan-ignore-next-line
-                            ->content(fn (Brand $record): ?string => $record?->created_at?->diffForHumans()),
+                            ->content(fn(Brand $record): ?string => $record?->created_at?->diffForHumans()),
 
                         Forms\Components\Placeholder::make('updated_at')
-                            ->label('Last modified at')
+                            ->label(__('filament-shop::default.brands.main.updated_at.label'))
                             // @phpstan-ignore-next-line
-                            ->content(fn (Brand $record): ?string => $record?->updated_at?->diffForHumans()),
+                            ->content(fn(Brand $record): ?string => $record?->updated_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])
-                    ->hidden(fn (?Brand $record) => $record === null),
+                    ->hidden(fn(?Brand $record) => $record === null),
             ])
             ->columns(3);
     }
@@ -94,18 +106,18 @@ class BrandResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Name')
+                    ->label(__('filament-shop::default.brands.main.name.label'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('website')
-                    ->label('Website')
+                    ->label(__('filament-shop::default.brands.main.website.label'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('visible')
-                    ->label('Visibility')
+                    ->label(__('filament-shop::default.brands.main.visible.label'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Updated Date')
+                    ->label(__('filament-shop::default.brands.main.updated_at.label'))
                     ->date()
                     ->sortable(),
             ])
@@ -116,13 +128,13 @@ class BrandResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->groupedBulkActions([
-                Tables\Actions\DeleteBulkAction::make()
-                    ->action(function () {
-                        Notification::make()
-                            ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
-                            ->warning()
-                            ->send();
-                    }),
+                // Tables\Actions\DeleteBulkAction::make()
+                //     ->action(function () {
+                //         Notification::make()
+                //             ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
+                //             ->warning()
+                //             ->send();
+                //     }),
             ])
             ->defaultSort('sort')
             ->reorderable('sort');

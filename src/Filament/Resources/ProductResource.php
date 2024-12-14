@@ -1,13 +1,12 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources;
+namespace A21ns1g4ts\FilamentShop\Filament\Resources;
 
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\CategoryResource\RelationManagers\ProductsRelationManager;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\ProductResource\Pages\CreateProduct;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\ProductResource\Pages\EditProduct;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\ProductResource\Pages\ListProducts;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\ProductResource\Widgets\ProductStats;
+use A21ns1g4ts\FilamentShop\Filament\Resources\CategoryResource\RelationManagers\ProductsRelationManager;
+use A21ns1g4ts\FilamentShop\Filament\Resources\ProductResource\Pages\CreateProduct;
+use A21ns1g4ts\FilamentShop\Filament\Resources\ProductResource\Pages\EditProduct;
+use A21ns1g4ts\FilamentShop\Filament\Resources\ProductResource\Pages\ListProducts;
+use A21ns1g4ts\FilamentShop\Filament\Resources\ProductResource\Widgets\ProductStats;
 use A21ns1g4ts\FilamentShop\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -27,15 +26,26 @@ use Illuminate\Support\Str;
 
 class ProductResource extends Resource
 {
-    protected static ?string $cluster = Products::class;
-
     protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?string $navigationIcon = 'heroicon-o-bolt';
 
-    protected static ?string $navigationLabel = 'Products';
-
     protected static ?int $navigationSort = 0;
+
+    public static function getModelLabel(): string
+    {
+        return __('filament-shop::default.products.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament-shop::default.products.plural_model_label');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament-shop::default.products.navigation_label');
+    }
 
     public static function getModel(): string
     {
@@ -56,23 +66,18 @@ class ProductResource extends Resource
                         Forms\Components\Section::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name')
+                                    ->label(__('filament-shop::default.products.main.name.label'))
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
-                                        if ($operation !== 'create') {
-                                            return;
-                                        }
-
-                                        $set('slug', Str::slug($state));
-                                    }),
+                                    ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
                                 Forms\Components\TextInput::make('slug')
+                                    ->label(__('filament-shop::default.products.main.slug.label'))
                                     ->disabled()
                                     ->dehydrated()
                                     ->required()
-                                    ->maxLength(255)
-                                    ->unique(Product::class, 'slug', ignoreRecord: true),
+                                    ->maxLength(255),
 
                                 Forms\Components\MarkdownEditor::make('description')
                                     ->columnSpan('full'),
@@ -80,6 +85,7 @@ class ProductResource extends Resource
                             ->columns(2),
 
                         Forms\Components\Section::make('Images')
+                            ->label(__('filament-shop::default.products.main.images.label'))
                             ->schema([
                                 SpatieMediaLibraryFileUpload::make('media')
                                     ->collection('product-images')
@@ -92,14 +98,19 @@ class ProductResource extends Resource
                             ->collapsible(),
 
                         Forms\Components\Section::make('Pricing')
+                            ->label(__('filament-shop::default.products.pricing.label'))
+                            ->description(__('filament-shop::default.products.pricing.description'))
                             ->schema([
                                 Forms\Components\TextInput::make('price')
+                                    ->label(__('filament-shop::default.products.pricing.price.label'))
+                                    ->helperText(__('filament-shop::default.products.pricing.price.helper_text'))
                                     ->numeric()
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                     ->required(),
 
-                                Forms\Components\TextInput::make('old_price')
-                                    ->label('Compare at price')
+                                Forms\Components\TextInput::make('original_price')
+                                    ->label(__('filament-shop::default.products.pricing.original_price.label'))
+                                    ->helperText(__('filament-shop::default.products.pricing.original_price.helper_text'))
                                     ->numeric()
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/']),
 
@@ -111,25 +122,27 @@ class ProductResource extends Resource
                             ])
                             ->columns(2),
                         Forms\Components\Section::make('Inventory')
+                            ->label(__('filament-shop::default.products.inventory.label'))
                             ->schema([
                                 Forms\Components\TextInput::make('sku')
-                                    ->label('SKU (Stock Keeping Unit)')
+                                    ->label(__('filament-shop::default.products.inventory.sku.label'))
                                     ->unique(Product::class, 'sku', ignoreRecord: true)
                                     ->maxLength(255),
 
                                 Forms\Components\TextInput::make('barcode')
-                                    ->label('Barcode (ISBN, UPC, GTIN, etc.)')
+                                    ->label(__('filament-shop::default.products.inventory.barcode.label'))
                                     ->unique(Product::class, 'barcode', ignoreRecord: true)
                                     ->maxLength(255),
 
-                                Forms\Components\TextInput::make('qty')
-                                    ->label('Quantity')
+                                Forms\Components\TextInput::make('quantity')
+                                    ->label(__('filament-shop::default.products.inventory.quantity.label'))
                                     ->numeric()
                                     ->rules(['integer', 'min:0'])
                                     ->required(),
 
                                 Forms\Components\TextInput::make('security_stock')
-                                    ->helperText('The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.')
+                                    ->label(__('filament-shop::default.products.inventory.security_stock.label'))
+                                    ->helperText(__('filament-shop::default.products.inventory.security_stock.helper_text'))
                                     ->numeric()
                                     ->rules(['integer', 'min:0'])
                                     ->required(),
@@ -141,26 +154,36 @@ class ProductResource extends Resource
                 Forms\Components\Group::make()
                     ->schema([
                         Forms\Components\Section::make('Status')
+                            ->label(__('filament-shop::default.products.status.label'))
                             ->schema([
                                 Forms\Components\Toggle::make('visible')
-                                    ->label('Visible')
-                                    ->helperText('This product will be hidden from all sales channels.')
+                                    ->label(__('filament-shop::default.products.status.visible.label'))
+                                    ->helperText(__('filament-shop::default.products.status.visible.helper_text'))
                                     ->default(true),
 
+                                Forms\Components\Checkbox::make('pinned')
+                                    ->label(__('filament-shop::default.products.status.pinned.label'))
+                                    ->helperText(__('filament-shop::default.products.status.pinned.helper_text')),
+
                                 Forms\Components\DatePicker::make('published_at')
-                                    ->label('Availability')
+                                    ->label(__('filament-shop::default.products.status.published_at.label'))
+                                    ->helperText(__('filament-shop::default.products.status.published_at.helper_text'))
                                     ->default(now())
                                     ->required(),
                             ]),
 
                         Forms\Components\Section::make('Associations')
+                            ->label(__('filament-shop::default.products.associations.label'))
                             ->schema([
                                 Forms\Components\Select::make('brand_id')
+                                    ->label(__('filament-shop::default.products.associations.brand.label'))
                                     ->relationship('brand', 'name')
                                     ->preload()
                                     ->searchable(),
 
                                 Forms\Components\Select::make('categories')
+                                    ->label(__('filament-shop::default.products.associations.categories.label'))
+                                    ->helperText(__('filament-shop::default.products.associations.categories.helper_text'))
                                     ->relationship('categories', 'name')
                                     ->preload()
                                     ->multiple()
@@ -169,18 +192,10 @@ class ProductResource extends Resource
                             ]),
 
                         Forms\Components\Section::make('Meta')
+                            ->label(__('filament-shop::default.products.meta.label'))
                             ->schema([
                                 Forms\Components\KeyValue::make('meta')
-                                    ->label(''),
-                            ]),
-
-                        Forms\Components\Section::make('Shipping')
-                            ->schema([
-                                Forms\Components\Checkbox::make('backorder')
-                                    ->label('This product can be returned'),
-
-                                Forms\Components\Checkbox::make('requires_shipping')
-                                    ->label('This product will be shipped'),
+                                    ->label(__('filament-shop::default.products.meta.label'))
                             ]),
                     ])
                     ->columnSpan(['lg' => 1]),
@@ -222,7 +237,7 @@ class ProductResource extends Resource
                     ->sortable()
                     ->toggleable(),
 
-                Tables\Columns\TextColumn::make('qty')
+                Tables\Columns\TextColumn::make('quantity')
                     ->label('Quantity')
                     ->searchable()
                     ->sortable()
@@ -244,31 +259,34 @@ class ProductResource extends Resource
             ->filters([
                 QueryBuilder::make()
                     ->constraints([
-                        TextConstraint::make('name'),
-                        TextConstraint::make('slug'),
+                        TextConstraint::make('name')
+                            ->label(__('filament-shop::default.products.main.name.label')),
+                        TextConstraint::make('slug')
+                            ->label(__('filament-shop::default.products.main.slug.label')),
                         TextConstraint::make('sku')
-                            ->label('SKU (Stock Keeping Unit)'),
+                            ->label(__('filament-shop::default.products.inventory.sku.label')),
                         TextConstraint::make('barcode')
-                            ->label('Barcode (ISBN, UPC, GTIN, etc.)'),
+                            ->label(__('filament-shop::default.products.inventory.barcode.label')),
                         TextConstraint::make('description'),
-                        NumberConstraint::make('old_price')
-                            ->label('Compare at price')
+                        NumberConstraint::make('original_price')
+                            ->label(__('filament-shop::default.products.pricing.original_price.label'))
                             ->icon('heroicon-m-currency-dollar'),
                         NumberConstraint::make('price')
+                            ->label(__('filament-shop::default.products.pricing.price.label'))
                             ->icon('heroicon-m-currency-dollar'),
                         NumberConstraint::make('cost')
-                            ->label('Cost per item')
+                            ->label(__('filament-shop::default.products.pricing.cost.label'))
                             ->icon('heroicon-m-currency-dollar'),
-                        NumberConstraint::make('qty')
-                            ->label('Quantity'),
-                        NumberConstraint::make('security_stock'),
+                        NumberConstraint::make('quantity')
+                            ->label(__('filament-shop::default.products.inventory.quantity.label')),
+                        NumberConstraint::make('security_stock')
+                            ->label(__('filament-shop::default.products.inventory.security_stock.label')),
                         BooleanConstraint::make('visible')
-                            ->label('Visibility'),
-                        BooleanConstraint::make('featured'),
-                        BooleanConstraint::make('backorder'),
-                        BooleanConstraint::make('requires_shipping')
-                            ->icon('heroicon-m-truck'),
-                        DateConstraint::make('published_at'),
+                            ->label(__('filament-shop::default.products.status.visible.label')),
+                        BooleanConstraint::make('pinned')
+                            ->label(__('filament-shop::default.products.status.pinned.label')),
+                        DateConstraint::make('published_at')
+                            ->label(__('filament-shop::default.products.status.published_at.label')),
                     ])
                     ->constraintPickerColumns(2),
             ], layout: Tables\Enums\FiltersLayout::AboveContentCollapsible)
@@ -277,13 +295,13 @@ class ProductResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->groupedBulkActions([
-                Tables\Actions\DeleteBulkAction::make()
-                    ->action(function () {
-                        Notification::make()
-                            ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
-                            ->warning()
-                            ->send();
-                    }),
+                // Tables\Actions\DeleteBulkAction::make()
+                //     ->action(function () {
+                //         Notification::make()
+                //             ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
+                //             ->warning()
+                //             ->send();
+                //     }),
             ]);
     }
 
@@ -333,6 +351,6 @@ class ProductResource extends Resource
         /** @var class-string<Model> $modelClass */
         $modelClass = static::getModel();
 
-        return (string) $modelClass::whereColumn('qty', '<', 'security_stock')->count();
+        return (string) $modelClass::whereColumn('quantity', '<', 'security_stock')->count();
     }
 }

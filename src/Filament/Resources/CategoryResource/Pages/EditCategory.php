@@ -1,8 +1,8 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\CategoryResource\Pages;
+namespace A21ns1g4ts\FilamentShop\Filament\Resources\CategoryResource\Pages;
 
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\CategoryResource;
+use A21ns1g4ts\FilamentShop\Filament\Resources\CategoryResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 

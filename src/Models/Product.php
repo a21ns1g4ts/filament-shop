@@ -28,16 +28,14 @@ class Product extends Model implements HasMedia
         'sku',
         'barcode',
         'description',
-        'qty',
+        'quantity',
         'security_stock',
-        'featured',
+        'pinned',
         'visible',
-        'old_price',
+        'original_price',
         'price',
         'cost',
         'type',
-        'backorder',
-        'requires_shipping',
         'published_at',
         'seo_title',
         'seo_description',
@@ -54,10 +52,8 @@ class Product extends Model implements HasMedia
      */
     protected $casts = [
         'meta' => 'array',
-        'featured' => 'boolean',
+        'pinned' => 'boolean',
         'visible' => 'boolean',
-        'backorder' => 'boolean',
-        'requires_shipping' => 'boolean',
         'published_at' => 'date',
     ];
 

@@ -1,12 +1,11 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources;
+namespace A21ns1g4ts\FilamentShop\Filament\Resources;
 
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\CategoryResource\Pages\CreateCategory;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\CategoryResource\Pages\EditCategory;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\CategoryResource\Pages\ListCategories;
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\CategoryResource\RelationManagers\ProductsRelationManager;
+use A21ns1g4ts\FilamentShop\Filament\Resources\CategoryResource\Pages\CreateCategory;
+use A21ns1g4ts\FilamentShop\Filament\Resources\CategoryResource\Pages\EditCategory;
+use A21ns1g4ts\FilamentShop\Filament\Resources\CategoryResource\Pages\ListCategories;
+use A21ns1g4ts\FilamentShop\Filament\Resources\CategoryResource\RelationManagers\ProductsRelationManager;
 use A21ns1g4ts\FilamentShop\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -19,15 +18,26 @@ use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
 {
-    protected static ?string $cluster = Products::class;
-
     protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $navigationParentItem = 'Products';
-
     protected static ?int $navigationSort = 1;
+
+    public static function getModelLabel(): string
+    {
+        return __('filament-shop::default.categories.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament-shop::default.categories.plural_model_label');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament-shop::default.categories.navigation_label');
+    }
 
     public static function getModel(): string
     {
@@ -48,47 +58,49 @@ class CategoryResource extends Resource
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name')
+                                    ->label(__('filament-shop::default.categories.main.name.label'))
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                                    ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
                                 Forms\Components\TextInput::make('slug')
+                                    ->label(__('filament-shop::default.categories.main.slug.label'))
                                     ->disabled()
                                     ->dehydrated()
                                     ->required()
-                                    ->maxLength(255)
-                                    ->unique(Category::class, 'slug', ignoreRecord: true),
+                                    ->maxLength(255),
                             ]),
 
                         Forms\Components\Select::make('parent_id')
-                            ->label('Parent')
-                            ->relationship('parent', 'name', fn (Builder $query) => $query->where('parent_id', null))
+                            ->label(__('filament-shop::default.categories.main.parent.label'))
+                            ->relationship('parent', 'name', fn(Builder $query) => $query->where('parent_id', null), ignoreRecord: true)
+                            ->preload()
                             ->searchable()
-                            ->placeholder('Select parent category'),
+                            ->placeholder(__('filament-shop::default.categories.main.parent.placeholder')),
 
                         Forms\Components\Toggle::make('visible')
-                            ->label('Visible to customers.')
+                            ->label(__('filament-shop::default.categories.main.visible.label'))
                             ->default(true),
 
                         Forms\Components\MarkdownEditor::make('description')
-                            ->label('Description'),
+                            ->label(__('filament-shop::default.categories.main.description.label')),
                     ])
-                    ->columnSpan(['lg' => fn (?Category $record) => $record === null ? 3 : 2]),
+                    ->columnSpan(['lg' => fn(?Category $record) => $record === null ? 3 : 2]),
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Placeholder::make('created_at')
-                            ->label('Created at')
+                            ->label(__('filament-shop::default.categories.main.created_at.label'))
                             // @phpstan-ignore-next-line
-                            ->content(fn (Category $record): ?string => $record->created_at?->diffForHumans()),
+                            ->content(fn(Category $record): ?string => $record->created_at?->diffForHumans()),
 
                         Forms\Components\Placeholder::make('updated_at')
-                            ->label('Last modified at')
+                            ->label(__('filament-shop::default.categories.main.updated_at.label'))
                             // @phpstan-ignore-next-line
-                            ->content(fn (Category $record): ?string => $record->updated_at?->diffForHumans()),
+                            ->content(fn(Category $record): ?string => $record->updated_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])
-                    ->hidden(fn (?Category $record) => $record === null),
+                    ->hidden(fn(?Category $record) => $record === null),
             ])
             ->columns(3);
     }
@@ -98,18 +110,18 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Name')
+                    ->label(__('filament-shop::default.categories.main.name.label'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('parent.name')
-                    ->label('Parent')
+                    ->label(__('filament-shop::default.categories.main.parent.label'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('visible')
-                    ->label('Visibility')
+                    ->label(__('filament-shop::default.categories.main.visible.label'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Updated Date')
+                    ->label(__('filament-shop::default.categories.main.updated_at.label'))
                     ->date()
                     ->sortable(),
             ])
@@ -120,13 +132,13 @@ class CategoryResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->groupedBulkActions([
-                Tables\Actions\DeleteBulkAction::make()
-                    ->action(function () {
-                        Notification::make()
-                            ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
-                            ->warning()
-                            ->send();
-                    }),
+                // Tables\Actions\DeleteBulkAction::make()
+                //     ->action(function () {
+                //         Notification::make()
+                //             ->title('Now, now, don\'t be cheeky, leave some records for others to play with!')
+                //             ->warning()
+                //             ->send();
+                //     }),
             ])
             ->defaultSort('sort')
             ->reorderable('sort');

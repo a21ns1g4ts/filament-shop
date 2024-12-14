@@ -22,15 +22,14 @@ return new class extends Migration
             $table->string('sku')->unique()->nullable();
             $table->string('barcode')->unique()->nullable();
             $table->longText('description')->nullable();
-            $table->unsignedBigInteger('qty')->default(0);
+            $table->unsignedBigInteger('quantity')->default(0);
             $table->unsignedBigInteger('security_stock')->default(0);
-            $table->boolean('featured')->default(false);
+            $table->boolean('pinned')->default(false);
             $table->boolean('visible')->default(false);
-            $table->decimal('old_price', 10, 2)->nullable();
+            $table->decimal('original_price', 10, 2)->nullable();
             $table->decimal('price', 10, 2)->nullable();
             $table->decimal('cost', 10, 2)->nullable();
             $table->enum('type', ['deliverable', 'downloadable'])->nullable();
-            $table->boolean('backorder')->default(false);
             $table->boolean('requires_shipping')->default(false);
             $table->date('published_at')->nullable();
             $table->string('seo_title')->nullable();

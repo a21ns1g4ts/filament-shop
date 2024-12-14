@@ -1,8 +1,8 @@
 <?php
 
-namespace A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\BrandResource\Pages;
+namespace A21ns1g4ts\FilamentShop\Filament\Resources\BrandResource\Pages;
 
-use A21ns1g4ts\FilamentShop\Filament\Clusters\Products\Resources\BrandResource;
+use A21ns1g4ts\FilamentShop\Filament\Resources\BrandResource;
 use A21ns1g4ts\FilamentShop\Filament\Exports\BrandExporter;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;

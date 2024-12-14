@@ -2,6 +2,7 @@
 
 return [
     'tenant_scope' => false,
+    'navigation_group' => true,
     'products' => [
         'model' => \A21ns1g4ts\FilamentShop\Models\Product::class,
     ],
