@@ -32,8 +32,6 @@ return new class extends Migration
             $table->enum('type', ['deliverable', 'downloadable'])->nullable();
             $table->boolean('requires_shipping')->default(false);
             $table->date('published_at')->nullable();
-            $table->string('seo_title')->nullable();
-            $table->text('seo_description')->nullable();
             $table->decimal('weight_value', 10, 2)->nullable()
                 ->default(0.00)
                 ->unsigned();

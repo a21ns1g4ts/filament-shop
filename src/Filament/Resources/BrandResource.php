@@ -80,6 +80,10 @@ class BrandResource extends Resource
                             ->default(true),
 
                         Forms\Components\MarkdownEditor::make('description')
+                            // TODO: add support for file attachments compatible with s3 storage
+                            ->disableToolbarButtons([
+                                'attachFiles',
+                            ])
                             ->label(__('filament-shop::default.brands.main.description.label')),
                     ])
                     ->columnSpan(['lg' => fn (?Brand $record) => $record === null ? 3 : 2]),

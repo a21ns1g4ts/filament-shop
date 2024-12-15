@@ -15,6 +15,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use RalphJSmit\Filament\SEO\SEO;
 
 class CategoryResource extends Resource
 {
@@ -53,38 +54,52 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make()
+                Forms\Components\Group::make()
                     ->schema([
-                        Forms\Components\Grid::make()
+                        Forms\Components\Section::make()
                             ->schema([
-                                Forms\Components\TextInput::make('name')
-                                    ->label(__('filament-shop::default.categories.main.name.label'))
-                                    ->required()
-                                    ->maxLength(255)
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                Forms\Components\Grid::make()
+                                    ->schema([
+                                        Forms\Components\TextInput::make('name')
+                                            ->label(__('filament-shop::default.categories.main.name.label'))
+                                            ->required()
+                                            ->maxLength(255)
+                                            ->live(onBlur: true)
+                                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
-                                Forms\Components\TextInput::make('slug')
-                                    ->label(__('filament-shop::default.categories.main.slug.label'))
-                                    ->disabled()
-                                    ->dehydrated()
-                                    ->required()
-                                    ->maxLength(255),
+                                        Forms\Components\TextInput::make('slug')
+                                            ->label(__('filament-shop::default.categories.main.slug.label'))
+                                            ->disabled()
+                                            ->dehydrated()
+                                            ->required()
+                                            ->maxLength(255),
+                                    ]),
+
+                                Forms\Components\Select::make('parent_id')
+                                    ->label(__('filament-shop::default.categories.main.parent.label'))
+                                    ->relationship('parent', 'name', fn (Builder $query) => $query->where('parent_id', null), ignoreRecord: true)
+                                    ->preload()
+                                    ->searchable()
+                                    ->placeholder(__('filament-shop::default.categories.main.parent.placeholder')),
+
+                                Forms\Components\Toggle::make('visible')
+                                    ->label(__('filament-shop::default.categories.main.visible.label'))
+                                    ->default(true),
+
+                                Forms\Components\MarkdownEditor::make('description')
+                                    // TODO: add support for file attachments compatible with s3 storage
+                                    ->disableToolbarButtons([
+                                        'attachFiles',
+                                    ])
+                                    ->label(__('filament-shop::default.categories.main.description.label')),
                             ]),
 
-                        Forms\Components\Select::make('parent_id')
-                            ->label(__('filament-shop::default.categories.main.parent.label'))
-                            ->relationship('parent', 'name', fn (Builder $query) => $query->where('parent_id', null), ignoreRecord: true)
-                            ->preload()
-                            ->searchable()
-                            ->placeholder(__('filament-shop::default.categories.main.parent.placeholder')),
-
-                        Forms\Components\Toggle::make('visible')
-                            ->label(__('filament-shop::default.categories.main.visible.label'))
-                            ->default(true),
-
-                        Forms\Components\MarkdownEditor::make('description')
-                            ->label(__('filament-shop::default.categories.main.description.label')),
+                        Forms\Components\Section::make('SEO')
+                            ->description(__('filament-shop::default.seo.description'))
+                            ->schema([
+                                SEO::make(['title', 'description']),
+                            ])
+                            ->collapsible(),
                     ])
                     ->columnSpan(['lg' => fn (?Category $record) => $record === null ? 3 : 2]),
                 Forms\Components\Section::make()

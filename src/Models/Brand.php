@@ -7,12 +7,14 @@ use A21ns1g4ts\FilamentShop\FilamentShop;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Brand extends Model implements HasMedia
 {
     use HasFactory;
+    use HasSEO;
     use InteractsWithMedia;
 
     /**
@@ -41,7 +43,10 @@ class Brand extends Model implements HasMedia
         'visible' => 'boolean',
     ];
 
-    protected static $factory = BrandFactory::class;
+    protected static function newFactory()
+    {
+        return BrandFactory::new();
+    }
 
     /** @return HasMany<Product> */
     public function products(): HasMany

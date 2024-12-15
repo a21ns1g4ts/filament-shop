@@ -5,6 +5,10 @@ return [
         'label' => 'Loja',
     ],
 
+    'seo' => [
+        'description' => 'Informações que serão usadas nos motores de busca.',
+    ],
+
     'categories' => [
         'navigation_label' => 'Categorias',
         'model_label' => 'Categoria',

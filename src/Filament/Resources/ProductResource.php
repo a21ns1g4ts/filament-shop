@@ -23,6 +23,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use RalphJSmit\Filament\SEO\SEO;
 
 class ProductResource extends Resource
 {
@@ -80,12 +81,16 @@ class ProductResource extends Resource
                                     ->maxLength(255),
 
                                 Forms\Components\MarkdownEditor::make('description')
+                                    // TODO: add support for file attachments compatible with s3 storage
+                                    ->disableToolbarButtons([
+                                        'attachFiles',
+                                    ])
+                                    ->label(__('filament-shop::default.products.main.description.label'))
                                     ->columnSpan('full'),
                             ])
                             ->columns(2),
 
-                        Forms\Components\Section::make('Images')
-                            ->label(__('filament-shop::default.products.main.images.label'))
+                        Forms\Components\Section::make(__('filament-shop::default.products.main.images.label'))
                             ->schema([
                                 SpatieMediaLibraryFileUpload::make('media')
                                     ->collection('product-images')
@@ -97,8 +102,14 @@ class ProductResource extends Resource
                             ])
                             ->collapsible(),
 
-                        Forms\Components\Section::make('Pricing')
-                            ->label(__('filament-shop::default.products.pricing.label'))
+                        Forms\Components\Section::make('SEO')
+                            ->description(__('filament-shop::default.seo.description'))
+                            ->schema([
+                                SEO::make(['title', 'description']),
+                            ])
+                            ->collapsible(),
+
+                        Forms\Components\Section::make(__('filament-shop::default.products.pricing.label'))
                             ->description(__('filament-shop::default.products.pricing.description'))
                             ->schema([
                                 Forms\Components\TextInput::make('price')
@@ -121,8 +132,8 @@ class ProductResource extends Resource
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/']),
                             ])
                             ->columns(2),
-                        Forms\Components\Section::make('Inventory')
-                            ->label(__('filament-shop::default.products.inventory.label'))
+
+                        Forms\Components\Section::make(__('filament-shop::default.products.inventory.label'))
                             ->schema([
                                 Forms\Components\TextInput::make('sku')
                                     ->label(__('filament-shop::default.products.inventory.sku.label'))
@@ -153,8 +164,7 @@ class ProductResource extends Resource
 
                 Forms\Components\Group::make()
                     ->schema([
-                        Forms\Components\Section::make('Status')
-                            ->label(__('filament-shop::default.products.status.label'))
+                        Forms\Components\Section::make(__('filament-shop::default.products.status.label'))
                             ->schema([
                                 Forms\Components\Toggle::make('visible')
                                     ->label(__('filament-shop::default.products.status.visible.label'))
@@ -172,8 +182,7 @@ class ProductResource extends Resource
                                     ->required(),
                             ]),
 
-                        Forms\Components\Section::make('Associations')
-                            ->label(__('filament-shop::default.products.associations.label'))
+                        Forms\Components\Section::make(__('filament-shop::default.products.associations.label'))
                             ->schema([
                                 Forms\Components\Select::make('brand_id')
                                     ->label(__('filament-shop::default.products.associations.brand.label'))
@@ -191,8 +200,7 @@ class ProductResource extends Resource
                                     ->hiddenOn(ProductsRelationManager::class),
                             ]),
 
-                        Forms\Components\Section::make('Meta')
-                            ->label(__('filament-shop::default.products.meta.label'))
+                        Forms\Components\Section::make(__('filament-shop::default.products.meta.label'))
                             ->schema([
                                 Forms\Components\KeyValue::make('meta')
                                     ->label(__('filament-shop::default.products.meta.label')),
