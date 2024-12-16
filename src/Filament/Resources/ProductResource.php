@@ -72,7 +72,7 @@ class ProductResource extends Resource
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
                                 Forms\Components\TextInput::make('slug')
                                     ->label(__('filament-shop::default.products.main.slug.label'))
@@ -196,7 +196,7 @@ class ProductResource extends Resource
                                             ->required()
                                             ->maxLength(255)
                                             ->live(onBlur: true)
-                                            ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
                                         Forms\Components\TextInput::make('slug')
                                             ->label(__('filament-shop::default.brands.main.slug.label'))
@@ -242,7 +242,7 @@ class ProductResource extends Resource
                                             ->required()
                                             ->maxLength(255)
                                             ->live(onBlur: true)
-                                            ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
                                         Forms\Components\TextInput::make('slug')
                                             ->label(__('filament-shop::default.categories.main.slug.label'))
@@ -253,7 +253,7 @@ class ProductResource extends Resource
 
                                         Forms\Components\Select::make('parent_id')
                                             ->label(__('filament-shop::default.categories.main.parent.label'))
-                                            ->relationship('parent', 'name', fn(Builder $query) => $query->where('parent_id', null), ignoreRecord: true)
+                                            ->relationship('parent', 'name', fn (Builder $query) => $query->where('parent_id', null), ignoreRecord: true)
                                             ->preload()
                                             ->searchable()
                                             ->placeholder(__('filament-shop::default.categories.main.parent.placeholder')),
