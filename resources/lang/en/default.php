@@ -5,6 +5,13 @@ return [
         'label' => 'Shop',
     ],
 
+    'exports' => [
+        'export_successful' => 'Your brand export has completed and :count :rows exported.',
+        'export_failed' => ':count :rows failed to export.',
+        'row' => 'row',
+        'row_plural' => 'rows',
+    ],
+
     'seo' => [
         'description' => 'Informations that will be used in search engines.',
     ],
@@ -43,6 +50,8 @@ return [
         'navigation_label' => 'Brands',
         'model_label' => 'Brand',
         'plural_model_label' => 'Brands',
+        'export_label' => 'Export',
+        'export_heading' => 'Export Brands',
         'main' => [
             'name' => [
                 'label' => 'Name',

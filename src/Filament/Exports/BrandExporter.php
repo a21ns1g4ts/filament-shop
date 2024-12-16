@@ -13,20 +13,38 @@ class BrandExporter extends Exporter
         return [
             ExportColumn::make('id')
                 ->label('ID'),
-            ExportColumn::make('name'),
-            ExportColumn::make('slug'),
-            ExportColumn::make('website'),
-            ExportColumn::make('created_at'),
-            ExportColumn::make('updated_at'),
+            ExportColumn::make('name')
+                ->label(__('filament-shop::default.brands.main.name.label')),
+            ExportColumn::make('slug')
+                ->label(__('filament-shop::default.brands.main.slug.label')),
+            ExportColumn::make('website')
+                ->label(__('filament-shop::default.brands.main.website.label')),
+            ExportColumn::make('created_at')
+                ->label(__('filament-shop::default.brands.main.created_at.label')),
+            ExportColumn::make('updated_at')
+                ->label(__('filament-shop::default.brands.main.updated_at.label')),
         ];
     }
 
     public static function getCompletedNotificationBody(Export $export): string
     {
-        $body = 'Your brand export has completed and ' . number_format($export->successful_rows) . ' ' . str('row')->plural($export->successful_rows) . ' exported.';
+        $successfulRows = $export->successful_rows;
+        $failedRowsCount = $export->getFailedRowsCount();
 
-        if ($failedRowsCount = $export->getFailedRowsCount()) {
-            $body .= ' ' . number_format($failedRowsCount) . ' ' . str('row')->plural($failedRowsCount) . ' failed to export.';
+        $rowLabel = trans_choice('filament-shop::default.exports.row', $successfulRows);
+        $body = '';
+
+        if ($failedRowsCount) {
+            $failedRowLabel = trans_choice('filament-shop::default.row', $failedRowsCount);
+            $body .= ' ' . __('filament-shop::default.exports.export_failed', [
+                'count' => number_format($failedRowsCount),
+                'rows' => $failedRowLabel,
+            ]);
+        } else {
+            $body = __('filament-shop::default.exports.export_successful', [
+                'count' => number_format($successfulRows),
+                'rows' => $rowLabel,
+            ]);
         }
 
         return $body;

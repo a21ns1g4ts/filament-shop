@@ -5,6 +5,13 @@ return [
         'label' => 'Loja',
     ],
 
+    'exports' => [
+        'export_successful' => 'Sua exportação foi concluída com :count :rows exportada(s).',
+        'export_failed' => ':count :rows falhou/falharam na exportação.',
+        'row' => 'linha',
+        'row_plural' => 'linhas',
+    ],
+
     'seo' => [
         'description' => 'Informações que serão usadas nos motores de busca.',
     ],
@@ -43,6 +50,8 @@ return [
         'navigation_label' => 'Marcas',
         'model_label' => 'Marca',
         'plural_model_label' => 'Marcas',
+        'export_label' => 'Exportar',
+        'export_heading' => 'Exportar Marcas',
         'main' => [
             'name' => [
                 'label' => 'Nome',
