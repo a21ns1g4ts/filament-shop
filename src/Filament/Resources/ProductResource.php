@@ -9,6 +9,7 @@ use A21ns1g4ts\FilamentShop\Filament\Resources\ProductResource\Pages\ListProduct
 use A21ns1g4ts\FilamentShop\Filament\Resources\ProductResource\Widgets\ProductStats;
 use A21ns1g4ts\FilamentShop\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
@@ -71,7 +72,7 @@ class ProductResource extends Resource
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                    ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
                                 Forms\Components\TextInput::make('slug')
                                     ->label(__('filament-shop::default.products.main.slug.label'))
@@ -188,7 +189,44 @@ class ProductResource extends Resource
                                     ->label(__('filament-shop::default.products.associations.brand.label'))
                                     ->relationship('brand', 'name')
                                     ->preload()
-                                    ->searchable(),
+                                    ->searchable()
+                                    ->createOptionForm([
+                                        Forms\Components\TextInput::make('name')
+                                            ->label(__('filament-shop::default.brands.main.name.label'))
+                                            ->required()
+                                            ->maxLength(255)
+                                            ->live(onBlur: true)
+                                            ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+
+                                        Forms\Components\TextInput::make('slug')
+                                            ->label(__('filament-shop::default.brands.main.slug.label'))
+                                            ->disabled()
+                                            ->dehydrated()
+                                            ->required()
+                                            ->maxLength(255),
+
+                                        Forms\Components\TextInput::make('website')
+                                            ->label(__('filament-shop::default.brands.main.website.label'))
+                                            ->maxLength(255)
+                                            ->url(),
+
+                                        Forms\Components\Toggle::make('visible')
+                                            ->label(__('filament-shop::default.brands.main.visible.label'))
+                                            ->default(true),
+
+                                        Forms\Components\MarkdownEditor::make('description')
+                                            // TODO: add support for file attachments compatible with s3 storage
+                                            ->disableToolbarButtons([
+                                                'attachFiles',
+                                            ])
+                                            ->label(__('filament-shop::default.brands.main.description.label')),
+                                    ])
+                                    ->createOptionAction(function (Action $action) {
+                                        return $action
+                                            ->modalHeading('Criar Marca')
+                                            ->modalSubmitActionLabel('Criar')
+                                            ->modalWidth('lg');
+                                    }),
 
                                 Forms\Components\Select::make('categories')
                                     ->label(__('filament-shop::default.products.associations.categories.label'))
@@ -197,7 +235,46 @@ class ProductResource extends Resource
                                     ->preload()
                                     ->multiple()
                                     ->required()
-                                    ->hiddenOn(ProductsRelationManager::class),
+                                    ->hiddenOn(ProductsRelationManager::class)
+                                    ->createOptionForm([
+                                        Forms\Components\TextInput::make('name')
+                                            ->label(__('filament-shop::default.categories.main.name.label'))
+                                            ->required()
+                                            ->maxLength(255)
+                                            ->live(onBlur: true)
+                                            ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+
+                                        Forms\Components\TextInput::make('slug')
+                                            ->label(__('filament-shop::default.categories.main.slug.label'))
+                                            ->disabled()
+                                            ->dehydrated()
+                                            ->required()
+                                            ->maxLength(255),
+
+                                        Forms\Components\Select::make('parent_id')
+                                            ->label(__('filament-shop::default.categories.main.parent.label'))
+                                            ->relationship('parent', 'name', fn(Builder $query) => $query->where('parent_id', null), ignoreRecord: true)
+                                            ->preload()
+                                            ->searchable()
+                                            ->placeholder(__('filament-shop::default.categories.main.parent.placeholder')),
+
+                                        Forms\Components\Toggle::make('visible')
+                                            ->label(__('filament-shop::default.categories.main.visible.label'))
+                                            ->default(true),
+
+                                        Forms\Components\MarkdownEditor::make('description')
+                                            // TODO: add support for file attachments compatible with s3 storage
+                                            ->disableToolbarButtons([
+                                                'attachFiles',
+                                            ])
+                                            ->label(__('filament-shop::default.categories.main.description.label')),
+                                    ])
+                                    ->createOptionAction(function (Action $action) {
+                                        return $action
+                                            ->modalHeading('Criar Categoria')
+                                            ->modalSubmitActionLabel('Criar')
+                                            ->modalWidth('lg');
+                                    }),
                             ]),
 
                         Forms\Components\Section::make(__('filament-shop::default.products.meta.label'))
