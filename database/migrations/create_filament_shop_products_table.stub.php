@@ -18,9 +18,9 @@ return new class extends Migration
             $table->foreignId('brand_id')->nullable()->constrained('filament_shop_brands')->nullOnDelete();
             $table->json('meta')->nullable();
             $table->string('name');
-            $table->string('slug')->unique()->nullable();
-            $table->string('sku')->unique()->nullable();
-            $table->string('barcode')->unique()->nullable();
+            $table->string('slug')->nullable();
+            $table->string('sku')->nullable();
+            $table->string('barcode')->nullable();
             $table->longText('description')->nullable();
             $table->unsignedBigInteger('quantity')->default(0);
             $table->unsignedBigInteger('security_stock')->default(0);

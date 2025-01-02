@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('filament_shop_brands', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->string('website')->nullable();
             $table->longText('description')->nullable();
             $table->boolean('active')->default(false);

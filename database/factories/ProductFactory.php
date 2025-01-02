@@ -2,13 +2,15 @@
 
 namespace A21ns1g4ts\FilamentShop\Database\Factories;
 
-use A21ns1g4ts\FilamentShop\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 class ProductFactory extends Factory
 {
-    protected $model = Product::class;
+    public function modelName()
+    {
+        return config('filament-shop.products.model');
+    }
 
     public function definition(): array
     {
@@ -27,8 +29,6 @@ class ProductFactory extends Factory
             'price' => $this->faker->randomFloat(2, 80, 400),
             'cost' => $this->faker->randomFloat(2, 50, 200),
             'type' => $this->faker->randomElement(['deliverable', 'downloadable']),
-            'seo_title' => $this->faker->sentence(),
-            'seo_description' => $this->faker->realText(),
             'published_at' => $this->faker->dateTimeBetween('-1 year', '+1 year'),
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
             'updated_at' => $this->faker->dateTimeBetween('-5 month', 'now'),

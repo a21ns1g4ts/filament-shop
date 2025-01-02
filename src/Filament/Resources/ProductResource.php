@@ -23,6 +23,7 @@ use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use RalphJSmit\Filament\SEO\SEO;
 
@@ -294,17 +295,17 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('product-image')
                     ->label('Image')
+                    ->filterMediaUsing(
+                        fn (Collection $media): Collection => $media->take(3),
+                    )
                     ->collection('product-images'),
 
                 Tables\Columns\TextColumn::make('name')
                     ->label('Name')
+                    ->wrap()
+                    ->width('300px')
                     ->searchable()
                     ->sortable(),
-
-                Tables\Columns\TextColumn::make('brand.name')
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable(),
 
                 Tables\Columns\IconColumn::make('visible')
                     ->label('Visibility')
@@ -378,6 +379,7 @@ class ProductResource extends Resource
             ->deferFilters()
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->groupedBulkActions([
                 // Tables\Actions\DeleteBulkAction::make()
@@ -436,6 +438,7 @@ class ProductResource extends Resource
         /** @var class-string<Model> $modelClass */
         $modelClass = static::getModel();
 
-        return (string) $modelClass::whereColumn('quantity', '<', 'security_stock')->count();
+        // return (string) $modelClass::whereColumn('quantity', '<', 'security_stock')->count();
+        return (string) $modelClass::count();
     }
 }
