@@ -73,7 +73,7 @@ class ProductResource extends Resource
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                    ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
                                 Forms\Components\TextInput::make('slug')
                                     ->label(__('filament-shop::default.products.main.slug.label'))
@@ -128,8 +128,8 @@ class ProductResource extends Resource
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/']),
 
                                 Forms\Components\TextInput::make('cost')
-                                    ->label('Cost per item')
-                                    ->helperText('Customers won\'t see this price.')
+                                    ->label(__('filament-shop::default.products.pricing.cost.label'))
+                                    ->helperText(__('filament-shop::default.products.pricing.cost.helper_text'))
                                     ->numeric()
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/']),
                             ])
@@ -139,16 +139,19 @@ class ProductResource extends Resource
                             ->schema([
                                 Forms\Components\TextInput::make('sku')
                                     ->label(__('filament-shop::default.products.inventory.sku.label'))
+                                    ->helperText(__('filament-shop::default.products.inventory.sku.helper_text'))
                                     ->unique(Product::class, 'sku', ignoreRecord: true)
                                     ->maxLength(255),
 
                                 Forms\Components\TextInput::make('barcode')
                                     ->label(__('filament-shop::default.products.inventory.barcode.label'))
+                                    ->helperText(__('filament-shop::default.products.inventory.barcode.helper_text'))
                                     ->unique(Product::class, 'barcode', ignoreRecord: true)
                                     ->maxLength(255),
 
                                 Forms\Components\TextInput::make('quantity')
                                     ->label(__('filament-shop::default.products.inventory.quantity.label'))
+                                    ->helperText(__('filament-shop::default.products.inventory.quantity.helper_text'))
                                     ->numeric()
                                     ->rules(['integer', 'min:0'])
                                     ->required(),
@@ -197,7 +200,7 @@ class ProductResource extends Resource
                                             ->required()
                                             ->maxLength(255)
                                             ->live(onBlur: true)
-                                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                            ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
                                         Forms\Components\TextInput::make('slug')
                                             ->label(__('filament-shop::default.brands.main.slug.label'))
@@ -243,7 +246,7 @@ class ProductResource extends Resource
                                             ->required()
                                             ->maxLength(255)
                                             ->live(onBlur: true)
-                                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                            ->afterStateUpdated(fn(string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
                                         Forms\Components\TextInput::make('slug')
                                             ->label(__('filament-shop::default.categories.main.slug.label'))
@@ -254,7 +257,7 @@ class ProductResource extends Resource
 
                                         Forms\Components\Select::make('parent_id')
                                             ->label(__('filament-shop::default.categories.main.parent.label'))
-                                            ->relationship('parent', 'name', fn (Builder $query) => $query->where('parent_id', null), ignoreRecord: true)
+                                            ->relationship('parent', 'name', fn(Builder $query) => $query->where('parent_id', null), ignoreRecord: true)
                                             ->preload()
                                             ->searchable()
                                             ->placeholder(__('filament-shop::default.categories.main.parent.placeholder')),
@@ -296,35 +299,35 @@ class ProductResource extends Resource
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('product-image')
                     ->label('Image')
                     ->filterMediaUsing(
-                        fn (Collection $media): Collection => $media->take(3),
+                        fn(Collection $media): Collection => $media->take(3),
                     )
                     ->collection('product-images'),
 
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Name')
+                    ->label(__('filament-shop::default.products.main.name.label'))
                     ->wrap()
                     ->width('300px')
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\IconColumn::make('visible')
-                    ->label('Visibility')
+                    ->label(__('filament-shop::default.products.status.visible.label'))
                     ->sortable()
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('price')
-                    ->label('Price')
+                    ->label(__('filament-shop::default.products.pricing.price.label'))
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('sku')
-                    ->label('SKU')
+                    ->label(__('filament-shop::default.products.inventory.sku.label'))
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('quantity')
-                    ->label('Quantity')
+                    ->label(__('filament-shop::default.products.inventory.quantity.label'))
                     ->searchable()
                     ->sortable()
                     ->toggleable(),

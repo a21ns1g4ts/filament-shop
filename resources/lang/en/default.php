@@ -117,12 +117,15 @@ return [
             'label' => 'Inventory',
             'sku' => [
                 'label' => 'SKU (Stock Keeping Unit)',
+                'helper_text' => 'The SKU (Stock Keeping Unit) is a unique identifier for the product.',
             ],
             'barcode' => [
                 'label' => 'Barcode (ISBN, UPC, GTIN, etc.)',
+                'helper_text' => 'The barcode (ISBN, UPC, GTIN, etc.) is commonly used to identify a product and track inventory.',
             ],
             'quantity' => [
                 'label' => 'Quantity',
+                'helper_text' => 'The quantity of the product available in stock. This not updated automatically for now. You can disable the product if you do not want it to be visible.',
             ],
             'security_stock' => [
                 'label' => 'Security stock',

@@ -116,13 +116,16 @@ return [
         'inventory' => [
             'label' => 'Estoque',
             'sku' => [
-                'label' => 'SKU (Stock Keeping Unit)',
+                'label' => 'SKU (Unidade de estoque)',
+                'helper_text' => 'O SKU (Unidade de estoque) é um identificador exclusivo para o produto.',
             ],
             'barcode' => [
                 'label' => 'Código de barras (ISBN, UPC, GTIN, etc.)',
+                'helper_text' => 'O código de barras (ISBN, UPC, GTIN, etc.) é usualmente usado para identificar um produto e rastrear o estoque.',
             ],
             'quantity' => [
                 'label' => 'Quantidade',
+                'helper_text' => 'A quantidade do produto em estoque. Este valor não é atualizado automaticamente. Você pode desativar o produto se não quiser que ele seja visualizado.',
             ],
             'security_stock' => [
                 'label' => 'Estoque de segurança',
