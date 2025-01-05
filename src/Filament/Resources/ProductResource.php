@@ -95,6 +95,31 @@ class ProductResource extends Resource
                             ])
                             ->columns(2),
 
+                        Forms\Components\Section::make(__('filament-shop::default.products.pricing.label'))
+                            ->description(__('filament-shop::default.products.pricing.description'))
+                            ->schema([
+                                Forms\Components\TextInput::make('price')
+                                    ->label(__('filament-shop::default.products.pricing.price.label'))
+                                    ->helperText(__('filament-shop::default.products.pricing.price.helper_text'))
+                                    ->required()
+                                    ->numeric()
+                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/']),
+
+                                Forms\Components\TextInput::make('original_price')
+                                    ->label(__('filament-shop::default.products.pricing.original_price.label'))
+                                    ->helperText(__('filament-shop::default.products.pricing.original_price.helper_text'))
+                                    ->numeric()
+                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/']),
+
+                                Forms\Components\TextInput::make('cost')
+                                    ->label(__('filament-shop::default.products.pricing.cost.label'))
+                                    ->helperText(__('filament-shop::default.products.pricing.cost.helper_text'))
+                                    ->numeric()
+                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/']),
+                            ])
+                            ->collapsible()
+                            ->columns(3),
+
                         Forms\Components\Section::make(__('filament-shop::default.products.main.images.label'))
                             ->schema([
                                 SpatieMediaLibraryFileUpload::make('media')
@@ -112,31 +137,8 @@ class ProductResource extends Resource
                             ->schema([
                                 SEO::make(['title', 'description']),
                             ])
-                            ->collapsible(),
-
-                        Forms\Components\Section::make(__('filament-shop::default.products.pricing.label'))
-                            ->description(__('filament-shop::default.products.pricing.description'))
-                            ->schema([
-                                Forms\Components\TextInput::make('price')
-                                    ->label(__('filament-shop::default.products.pricing.price.label'))
-                                    ->helperText(__('filament-shop::default.products.pricing.price.helper_text'))
-                                    ->numeric()
-                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
-                                    ->required(),
-
-                                Forms\Components\TextInput::make('original_price')
-                                    ->label(__('filament-shop::default.products.pricing.original_price.label'))
-                                    ->helperText(__('filament-shop::default.products.pricing.original_price.helper_text'))
-                                    ->numeric()
-                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/']),
-
-                                Forms\Components\TextInput::make('cost')
-                                    ->label(__('filament-shop::default.products.pricing.cost.label'))
-                                    ->helperText(__('filament-shop::default.products.pricing.cost.helper_text'))
-                                    ->numeric()
-                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/']),
-                            ])
-                            ->columns(2),
+                            ->collapsible()
+                            ->collapsed(),
 
                         Forms\Components\Section::make(__('filament-shop::default.products.inventory.label'))
                             ->schema([
@@ -164,6 +166,7 @@ class ProductResource extends Resource
                                     ->numeric()
                                     ->rules(['integer', 'min:0', 'nullable']),
                             ])
+                            ->collapsible()
                             ->columns(2),
                     ])
                     ->columnSpan(['lg' => 2]),
@@ -298,9 +301,15 @@ class ProductResource extends Resource
         return new HtmlString(Blade::render('<div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">' . '<x-' . $icon . ' class="w-4 h-6" />' . $label . '</div>'));
     }
 
-    private static function isMobile()
+    private static function isMobile(): bool
     {
-        return is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'mobile'));
+        $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+
+        if (! is_string($userAgent) || empty($userAgent)) {
+            return false;
+        }
+
+        return stripos($userAgent, 'mobile') !== false;
     }
 
     private static function mobileColumns(Table $table): array

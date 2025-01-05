@@ -37,16 +37,7 @@ class Product extends Model implements HasMedia
         'original_price',
         'price',
         'cost',
-        'type',
         'published_at',
-        'seo_title',
-        'seo_description',
-        'weight_value',
-        'weight_unit',
-        'height_value',
-        'height_unit',
-        'width_value',
-        'width_unit',
     ];
 
     /**
