@@ -14,6 +14,7 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Filters\QueryBuilder;
 use Filament\Tables\Filters\QueryBuilder\Constraints\BooleanConstraint;
@@ -297,105 +298,165 @@ class ProductResource extends Resource
         return new HtmlString(Blade::render('<div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">' . '<x-' . $icon . ' class="w-4 h-6" />' . $label . '</div>'));
     }
 
-    public static function isMobile()
+    private static function isMobile()
     {
         return is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'mobile'));
+    }
+
+    private static function mobileColumns(Table $table): array
+    {
+        return [
+            Tables\Columns\Layout\Grid::make()
+                ->schema([
+                    Tables\Columns\Layout\Split::make([
+                        Tables\Columns\SpatieMediaLibraryImageColumn::make('product-image')
+                            ->label(__('filament-shop::default.products.main.images.label'))
+                            ->filterMediaUsing(
+                                fn (Collection $media): Collection => $media->reverse()->take(1),
+                            )
+                            ->collection('product-images')
+                            ->square()
+                            ->height('80px')
+                            ->stacked()
+                            ->toggleable()
+                            ->grow(false),
+
+                        \Filament\Tables\Columns\Layout\Grid::make()
+                            ->schema([
+                                Tables\Columns\Layout\Stack::make([
+                                    Tables\Columns\TextColumn::make('name')
+                                        ->label(('filament-shop::default.products.main.name.label'))
+                                        ->weight(FontWeight::Medium)
+                                        ->searchable(),
+
+                                    Tables\Columns\TextColumn::make('price')
+                                        ->label(__('filament-shop::default.products.pricing.price.label'))
+                                        ->weight(FontWeight::ExtraBold)
+                                        ->icon('heroicon-m-currency-dollar'),
+                                ]),
+                            ]),
+
+                    ]),
+                ]),
+
+            Tables\Columns\Layout\Panel::make([
+                Tables\Columns\TextColumn::make('categories.name')
+                    ->badge(),
+            ])
+                ->collapsed(true),
+        ];
+    }
+
+    private static function desktopColumns(Table $table): array
+    {
+        return [
+            Tables\Columns\SpatieMediaLibraryImageColumn::make('product-image')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.main.images.label'), 'heroicon-c-photo'))
+                ->filterMediaUsing(
+                    fn (Collection $media): Collection => $media->reverse()->take(1),
+                )
+                ->collection('product-images')
+                ->square()
+                ->height('80px')
+                ->stacked()
+                ->toggleable()
+                ->grow(false),
+
+            Tables\Columns\TextColumn::make('name')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.main.name.label'), 'heroicon-c-square-3-stack-3d'))
+                ->weight(FontWeight::Medium)
+                ->wrap()
+                ->searchable()
+                ->sortable(),
+
+            Tables\Columns\TextColumn::make('price')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.pricing.price.label'), 'heroicon-c-currency-dollar'))
+                ->weight(FontWeight::ExtraBold)
+                ->searchable()
+                ->sortable(),
+
+            Tables\Columns\IconColumn::make('visible')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.status.visible.label'), 'heroicon-c-eye'))
+                ->sortable()
+                ->toggleable(),
+
+            Tables\Columns\TextColumn::make('sku')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.sku.label'), 'heroicon-c-tag'))
+                ->searchable()
+                ->sortable()
+                ->toggleable(),
+
+            Tables\Columns\TextColumn::make('quantity')
+                ->label(__('filament-shop::default.products.inventory.quantity.label'))
+                ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.quantity.label'), 'heroicon-c-cube'))
+                ->searchable()
+                ->sortable()
+                ->toggleable(),
+
+            Tables\Columns\TextColumn::make('security_stock')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.security_stock.label'), 'heroicon-c-lock-closed'))
+                ->searchable()
+                ->sortable()
+                ->toggleable()
+                ->toggledHiddenByDefault(),
+
+            Tables\Columns\TextColumn::make('published_at')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.status.published_at.label'), 'heroicon-c-calendar'))
+                ->date()
+                ->sortable()
+                ->toggleable()
+                ->toggledHiddenByDefault(),
+        ];
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                Tables\Columns\SpatieMediaLibraryImageColumn::make('product-image')
-                    ->label(self::getLabelRaw(__('filament-shop::default.products.main.images.label'), 'heroicon-c-photo'))
-                    ->filterMediaUsing(
-                        fn (Collection $media): Collection => $media->reverse()->take(2),
-                    )
-                    ->collection('product-images')
-                    ->toggleable()
-                    ->toggledHiddenByDefault(fn (): bool => static::isMobile()),
-
-                Tables\Columns\TextColumn::make('name')
-                    ->label(self::getLabelRaw(__('filament-shop::default.products.main.name.label'), 'heroicon-c-square-3-stack-3d'))
-                    ->wrap()
-                    ->width('300px')
-                    ->searchable()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('price')
-                    ->label(self::getLabelRaw(__('filament-shop::default.products.pricing.price.label'), 'heroicon-c-currency-dollar'))
-                    ->searchable()
-                    ->sortable(),
-
-                Tables\Columns\IconColumn::make('visible')
-                    ->label(self::getLabelRaw(__('filament-shop::default.products.status.visible.label'), 'heroicon-c-eye'))
-                    ->sortable()
-                    ->toggleable()
-                    ->toggledHiddenByDefault(fn (): bool => static::isMobile()),
-
-                Tables\Columns\TextColumn::make('sku')
-                    ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.sku.label'), 'heroicon-c-tag'))
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable()
-                    ->toggledHiddenByDefault(fn (): bool => static::isMobile()),
-
-                Tables\Columns\TextColumn::make('quantity')
-                    ->label(__('filament-shop::default.products.inventory.quantity.label'))
-                    ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.quantity.label'), 'heroicon-c-cube'))
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable(),
-
-                Tables\Columns\TextColumn::make('security_stock')
-                    ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.security_stock.label'), 'heroicon-c-lock-closed'))
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable()
-                    ->toggledHiddenByDefault(),
-
-                Tables\Columns\TextColumn::make('published_at')
-                    ->label(self::getLabelRaw(__('filament-shop::default.products.status.published_at.label'), 'heroicon-c-calendar'))
-                    ->date()
-                    ->sortable()
-                    ->toggleable()
-                    ->toggledHiddenByDefault(),
-            ])
+            ->columns(self::isMobile() ? self::mobileColumns($table) : self::desktopColumns($table))
             ->filters([
-                QueryBuilder::make()
-                    ->constraints([
-                        TextConstraint::make('name')
-                            ->label(__('filament-shop::default.products.main.name.label')),
-                        TextConstraint::make('slug')
-                            ->label(__('filament-shop::default.products.main.slug.label')),
-                        TextConstraint::make('sku')
-                            ->label(__('filament-shop::default.products.inventory.sku.label')),
-                        TextConstraint::make('barcode')
-                            ->label(__('filament-shop::default.products.inventory.barcode.label')),
-                        TextConstraint::make('description'),
-                        NumberConstraint::make('original_price')
-                            ->label(__('filament-shop::default.products.pricing.original_price.label'))
-                            ->icon('heroicon-m-currency-dollar'),
-                        NumberConstraint::make('price')
-                            ->label(__('filament-shop::default.products.pricing.price.label'))
-                            ->icon('heroicon-m-currency-dollar'),
-                        NumberConstraint::make('cost')
-                            ->label(__('filament-shop::default.products.pricing.cost.label'))
-                            ->icon('heroicon-m-currency-dollar'),
-                        NumberConstraint::make('quantity')
-                            ->label(__('filament-shop::default.products.inventory.quantity.label')),
-                        NumberConstraint::make('security_stock')
-                            ->label(__('filament-shop::default.products.inventory.security_stock.label')),
-                        BooleanConstraint::make('visible')
-                            ->label(__('filament-shop::default.products.status.visible.label')),
-                        BooleanConstraint::make('pinned')
-                            ->label(__('filament-shop::default.products.status.pinned.label')),
-                        DateConstraint::make('published_at')
-                            ->label(__('filament-shop::default.products.status.published_at.label')),
-                    ])
-                    ->constraintPickerColumns(2),
+                \Filament\Tables\Filters\SelectFilter::make('categories')
+                    ->label(__('filament-shop::default.products.associations.categories.label'))
+                    ->relationship('categories', 'name')
+                    ->preload()
+                    ->multiple(),
+                \Filament\Tables\Filters\SelectFilter::make('brand_id')
+                    ->label(__('filament-shop::default.products.associations.brand.label'))
+                    ->relationship('brand', 'name')
+                    ->preload(),
+                // QueryBuilder::make()
+                //     ->constraints([
+                //         TextConstraint::make('name')
+                //             ->label(__('filament-shop::default.products.main.name.label')),
+                //         TextConstraint::make('slug')
+                //             ->label(__('filament-shop::default.products.main.slug.label')),
+                //         TextConstraint::make('sku')
+                //             ->label(__('filament-shop::default.products.inventory.sku.label')),
+                //         TextConstraint::make('barcode')
+                //             ->label(__('filament-shop::default.products.inventory.barcode.label')),
+                //         TextConstraint::make('description'),
+                //         NumberConstraint::make('original_price')
+                //             ->label(__('filament-shop::default.products.pricing.original_price.label'))
+                //             ->icon('heroicon-m-currency-dollar'),
+                //         NumberConstraint::make('price')
+                //             ->label(__('filament-shop::default.products.pricing.price.label'))
+                //             ->icon('heroicon-m-currency-dollar'),
+                //         NumberConstraint::make('cost')
+                //             ->label(__('filament-shop::default.products.pricing.cost.label'))
+                //             ->icon('heroicon-m-currency-dollar'),
+                //         NumberConstraint::make('quantity')
+                //             ->label(__('filament-shop::default.products.inventory.quantity.label')),
+                //         NumberConstraint::make('security_stock')
+                //             ->label(__('filament-shop::default.products.inventory.security_stock.label')),
+                //         BooleanConstraint::make('visible')
+                //             ->label(__('filament-shop::default.products.status.visible.label')),
+                //         BooleanConstraint::make('pinned')
+                //             ->label(__('filament-shop::default.products.status.pinned.label')),
+                //         DateConstraint::make('published_at')
+                //             ->label(__('filament-shop::default.products.status.published_at.label')),
+                //     ])
+                //     ->constraintPickerColumns(2),
             ], layout: Tables\Enums\FiltersLayout::AboveContentCollapsible)
-            ->deferFilters()
+            // ->deferFilters()
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
@@ -418,7 +479,7 @@ class ProductResource extends Resource
 
     public static function getWidgets(): array
     {
-        return [
+        return self::isMobile() ? [] : [
             ProductStats::class,
         ];
     }
