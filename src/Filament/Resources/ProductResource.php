@@ -24,6 +24,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use RalphJSmit\Filament\SEO\SEO;
 
@@ -153,15 +155,13 @@ class ProductResource extends Resource
                                     ->label(__('filament-shop::default.products.inventory.quantity.label'))
                                     ->helperText(__('filament-shop::default.products.inventory.quantity.helper_text'))
                                     ->numeric()
-                                    ->rules(['integer', 'min:0'])
-                                    ->required(),
+                                    ->rules(['integer', 'min:0', 'nullable']),
 
                                 Forms\Components\TextInput::make('security_stock')
                                     ->label(__('filament-shop::default.products.inventory.security_stock.label'))
                                     ->helperText(__('filament-shop::default.products.inventory.security_stock.helper_text'))
                                     ->numeric()
-                                    ->rules(['integer', 'min:0'])
-                                    ->required(),
+                                    ->rules(['integer', 'min:0', 'nullable']),
                             ])
                             ->columns(2),
                     ])
@@ -292,54 +292,70 @@ class ProductResource extends Resource
             ->columns(3);
     }
 
+    private static function getLabelRaw(string $label, string $icon)
+    {
+        return new HtmlString(Blade::render('<div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">' . '<x-' . $icon . ' class="w-4 h-6" />' . $label . '</div>'));
+    }
+
+    public static function isMobile()
+    {
+        return is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'mobile'));
+    }
+
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('product-image')
-                    ->label('Image')
+                    ->label(self::getLabelRaw(__('filament-shop::default.products.main.images.label'), 'heroicon-c-photo'))
                     ->filterMediaUsing(
-                        fn (Collection $media): Collection => $media->take(3),
+                        fn (Collection $media): Collection => $media->reverse()->take(2),
                     )
-                    ->collection('product-images'),
+                    ->collection('product-images')
+                    ->toggleable()
+                    ->toggledHiddenByDefault(fn (): bool => static::isMobile()),
 
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('filament-shop::default.products.main.name.label'))
+                    ->label(self::getLabelRaw(__('filament-shop::default.products.main.name.label'), 'heroicon-c-square-3-stack-3d'))
                     ->wrap()
                     ->width('300px')
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\IconColumn::make('visible')
-                    ->label(__('filament-shop::default.products.status.visible.label'))
-                    ->sortable()
-                    ->toggleable(),
-
                 Tables\Columns\TextColumn::make('price')
-                    ->label(__('filament-shop::default.products.pricing.price.label'))
+                    ->label(self::getLabelRaw(__('filament-shop::default.products.pricing.price.label'), 'heroicon-c-currency-dollar'))
                     ->searchable()
                     ->sortable(),
 
+                Tables\Columns\IconColumn::make('visible')
+                    ->label(self::getLabelRaw(__('filament-shop::default.products.status.visible.label'), 'heroicon-c-eye'))
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(fn (): bool => static::isMobile()),
+
                 Tables\Columns\TextColumn::make('sku')
-                    ->label(__('filament-shop::default.products.inventory.sku.label'))
+                    ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.sku.label'), 'heroicon-c-tag'))
                     ->searchable()
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->toggledHiddenByDefault(fn (): bool => static::isMobile()),
 
                 Tables\Columns\TextColumn::make('quantity')
                     ->label(__('filament-shop::default.products.inventory.quantity.label'))
+                    ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.quantity.label'), 'heroicon-c-cube'))
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('security_stock')
+                    ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.security_stock.label'), 'heroicon-c-lock-closed'))
                     ->searchable()
                     ->sortable()
                     ->toggleable()
                     ->toggledHiddenByDefault(),
 
                 Tables\Columns\TextColumn::make('published_at')
-                    ->label('Publish Date')
+                    ->label(self::getLabelRaw(__('filament-shop::default.products.status.published_at.label'), 'heroicon-c-calendar'))
                     ->date()
                     ->sortable()
                     ->toggleable()

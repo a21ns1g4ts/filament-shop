@@ -116,7 +116,7 @@ return [
         'inventory' => [
             'label' => 'Inventory',
             'sku' => [
-                'label' => 'SKU (Stock Keeping Unit)',
+                'label' => 'SKU',
                 'helper_text' => 'The SKU (Stock Keeping Unit) is a unique identifier for the product.',
             ],
             'barcode' => [

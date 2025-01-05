@@ -116,7 +116,7 @@ return [
         'inventory' => [
             'label' => 'Estoque',
             'sku' => [
-                'label' => 'SKU (Unidade de estoque)',
+                'label' => 'SKU',
                 'helper_text' => 'O SKU (Unidade de estoque) é um identificador exclusivo para o produto.',
             ],
             'barcode' => [
