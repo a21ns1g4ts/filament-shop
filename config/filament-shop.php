@@ -12,4 +12,9 @@ return [
     'categories' => [
         'model' => \A21ns1g4ts\FilamentShop\Models\Category::class,
     ],
+
+    'decimal_separator' => ',',
+    'thousand_separator' => '.',
+    'currency' => 'USD',
+    'decimal_precision' => 2,
 ];

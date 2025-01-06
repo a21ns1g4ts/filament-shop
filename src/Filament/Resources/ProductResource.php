@@ -7,6 +7,7 @@ use A21ns1g4ts\FilamentShop\Filament\Resources\ProductResource\Pages\CreateProdu
 use A21ns1g4ts\FilamentShop\Filament\Resources\ProductResource\Pages\EditProduct;
 use A21ns1g4ts\FilamentShop\Filament\Resources\ProductResource\Pages\ListProducts;
 use A21ns1g4ts\FilamentShop\Filament\Resources\ProductResource\Widgets\ProductStats;
+use A21ns1g4ts\FilamentShop\FilamentShop;
 use A21ns1g4ts\FilamentShop\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Components\Actions\Action;
@@ -102,20 +103,17 @@ class ProductResource extends Resource
                                     ->label(__('filament-shop::default.products.pricing.price.label'))
                                     ->helperText(__('filament-shop::default.products.pricing.price.helper_text'))
                                     ->required()
-                                    ->numeric()
-                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/']),
+                                    ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision()),
 
                                 Forms\Components\TextInput::make('original_price')
                                     ->label(__('filament-shop::default.products.pricing.original_price.label'))
                                     ->helperText(__('filament-shop::default.products.pricing.original_price.helper_text'))
-                                    ->numeric()
-                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/']),
+                                    ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision()),
 
                                 Forms\Components\TextInput::make('cost')
                                     ->label(__('filament-shop::default.products.pricing.cost.label'))
                                     ->helperText(__('filament-shop::default.products.pricing.cost.helper_text'))
-                                    ->numeric()
-                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/']),
+                                    ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision()),
                             ])
                             ->collapsible()
                             ->columns(3),
@@ -341,6 +339,7 @@ class ProductResource extends Resource
                                     Tables\Columns\TextColumn::make('price')
                                         ->label(__('filament-shop::default.products.pricing.price.label'))
                                         ->weight(FontWeight::ExtraBold)
+                                        ->currency(FilamentShop::getCurrency())
                                         ->icon('heroicon-m-currency-dollar'),
                                 ]),
                             ]),
@@ -359,6 +358,13 @@ class ProductResource extends Resource
     private static function desktopColumns(Table $table): array
     {
         return [
+            Tables\Columns\TextColumn::make('id')
+                ->label(self::getLabelRaw('ID', 'heroicon-c-identification'))
+                ->copyable()
+                ->sortable()
+                ->toggleable()
+                ->toggledHiddenByDefault(),
+
             Tables\Columns\SpatieMediaLibraryImageColumn::make('product-image')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.main.images.label'), 'heroicon-c-photo'))
                 ->filterMediaUsing(
@@ -373,6 +379,7 @@ class ProductResource extends Resource
 
             Tables\Columns\TextColumn::make('name')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.main.name.label'), 'heroicon-c-square-3-stack-3d'))
+                ->copyable()
                 ->weight(FontWeight::Medium)
                 ->wrap()
                 ->searchable()
@@ -382,25 +389,49 @@ class ProductResource extends Resource
                 ->label(self::getLabelRaw(__('filament-shop::default.products.pricing.price.label'), 'heroicon-c-currency-dollar'))
                 ->weight(FontWeight::ExtraBold)
                 ->searchable()
-                ->sortable(),
+                ->currency(FilamentShop::getCurrency())
+                ->sortable()
+                ->toggleable(),
 
-            Tables\Columns\IconColumn::make('visible')
+            Tables\Columns\TextColumn::make('original_price')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.pricing.original_price.label'), 'heroicon-c-currency-dollar'))
+                ->currency(FilamentShop::getCurrency())
+                ->sortable()
+                ->toggleable()
+                ->toggledHiddenByDefault(),
+
+            Tables\Columns\TextColumn::make('cost')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.pricing.cost.label'), 'heroicon-c-currency-dollar'))
+                ->currency(FilamentShop::getCurrency())
+                ->sortable()
+                ->toggleable()
+                ->toggledHiddenByDefault(),
+
+            Tables\Columns\TextColumn::make('sku')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.sku.label'), 'heroicon-c-tag'))
+                ->copyable()
+                ->weight(FontWeight::ExtraBold)
+                ->searchable()
+                ->sortable()
+                ->toggleable(),
+
+            Tables\Columns\ToggleColumn::make('visible')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.status.visible.label'), 'heroicon-c-eye'))
                 ->sortable()
                 ->toggleable(),
 
-            Tables\Columns\TextColumn::make('sku')
-                ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.sku.label'), 'heroicon-c-tag'))
-                ->searchable()
+            Tables\Columns\ToggleColumn::make('pinned')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.status.pinned.label'), 'heroicon-c-map-pin'))
                 ->sortable()
                 ->toggleable(),
 
             Tables\Columns\TextColumn::make('quantity')
-                ->label(__('filament-shop::default.products.inventory.quantity.label'))
                 ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.quantity.label'), 'heroicon-c-cube'))
+                ->weight(FontWeight::ExtraBold)
                 ->searchable()
                 ->sortable()
-                ->toggleable(),
+                ->toggleable()
+                ->toggledHiddenByDefault(),
 
             Tables\Columns\TextColumn::make('security_stock')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.security_stock.label'), 'heroicon-c-lock-closed'))
@@ -486,12 +517,12 @@ class ProductResource extends Resource
         return [];
     }
 
-    public static function getWidgets(): array
-    {
-        return self::isMobile() ? [] : [
-            ProductStats::class,
-        ];
-    }
+    // public static function getWidgets(): array
+    // {
+    //     return self::isMobile() ? [] : [
+    //         ProductStats::class,
+    //     ];
+    // }
 
     public static function getPages(): array
     {

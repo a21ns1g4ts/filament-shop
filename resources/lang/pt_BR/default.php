@@ -104,7 +104,7 @@ return [
                 'helper_text' => 'O preço do produto.',
             ],
             'original_price' => [
-                'label' => 'Preço de comparação',
+                'label' => 'Preço original',
                 'helper_text' => 'O preço original do produto.',
             ],
             'cost' => [

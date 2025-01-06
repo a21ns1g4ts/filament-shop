@@ -18,4 +18,24 @@ class FilamentShop
     {
         return config('filament-shop.categories.model');
     }
+
+    public static function getDecimalSeparator(): string
+    {
+        return config('filament-shop.decimal_separator');
+    }
+
+    public static function getThousandSeparator(): string
+    {
+        return config('filament-shop.thousand_separator');
+    }
+
+    public static function getCurrency(): string
+    {
+        return config('filament-shop.currency');
+    }
+
+    public static function getDecimalPrecision(): int
+    {
+        return config('filament-shop.decimal_precision');
+    }
 }
