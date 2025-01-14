@@ -124,6 +124,8 @@ class ProductResource extends Resource
                                     ->collection('product-images')
                                     ->image()
                                     ->reorderable()
+                                    ->downloadable()
+                                    ->openable()
                                     ->multiple()
                                     ->maxFiles(5)
                                     ->hiddenLabel(),

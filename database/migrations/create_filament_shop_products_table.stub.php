@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('slug')->nullable();
             $table->string('sku')->nullable();
             $table->string('barcode')->nullable();
-            $table->unsignedBigInteger('quantity')->default(0);
-            $table->unsignedBigInteger('security_stock')->default(0);
+            $table->unsignedBigInteger('quantity')->nullable();
+            $table->unsignedBigInteger('security_stock')->nullable();
             $table->boolean('pinned')->default(false);
             $table->boolean('visible')->default(false);
             $table->decimal('original_price', 10, 2)->nullable();
