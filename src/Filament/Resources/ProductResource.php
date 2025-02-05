@@ -381,7 +381,6 @@ class ProductResource extends Resource
 
             Tables\Columns\TextColumn::make('name')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.main.name.label'), 'heroicon-c-square-3-stack-3d'))
-                ->copyable()
                 ->weight(FontWeight::Medium)
                 ->wrap()
                 ->searchable()
@@ -390,7 +389,6 @@ class ProductResource extends Resource
             Tables\Columns\TextColumn::make('price')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.pricing.price.label'), 'heroicon-c-currency-dollar'))
                 ->weight(FontWeight::ExtraBold)
-                ->searchable()
                 ->currency(FilamentShop::getCurrency())
                 ->sortable()
                 ->toggleable(),
