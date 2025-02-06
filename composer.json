@@ -2,8 +2,9 @@
     "name": "a21ns1g4ts/filament-shop",
     "description": "This is my package filament-shop",
     "keywords": [
-        "a21ns1g4ts",
         "laravel",
+        "filament",
+        "a2insights",
         "filament-shop"
     ],
     "homepage": "https://github.com/a21ns1g4ts/filament-shop",
@@ -51,17 +52,13 @@
     },
     "scripts": {
         "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
-        "analyse": "vendor/bin/phpstan analyse",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
         "format": "vendor/bin/pint"
     },
     "config": {
         "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "phpstan/extension-installer": true
-        }
+        "allow-plugins": {}
     },
     "extra": {
         "laravel": {
