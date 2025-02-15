@@ -139,6 +139,10 @@ class CategoryResource extends Resource
                     ->label(__('filament-shop::default.categories.main.updated_at.label'))
                     ->date()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('filament-shop::default.categories.main.created_at.label'))
+                    ->date()
+                    ->sortable(),
             ])
             ->filters([
                 //

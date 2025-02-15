@@ -97,7 +97,6 @@ class ProductResource extends Resource
                             ->columns(2),
 
                         Forms\Components\Section::make(__('filament-shop::default.products.pricing.label'))
-                            ->description(__('filament-shop::default.products.pricing.description'))
                             ->schema([
                                 Forms\Components\TextInput::make('price')
                                     ->label(__('filament-shop::default.products.pricing.price.label'))
@@ -132,13 +131,13 @@ class ProductResource extends Resource
                             ])
                             ->collapsible(),
 
-                        Forms\Components\Section::make('SEO')
-                            ->description(__('filament-shop::default.seo.description'))
-                            ->schema([
-                                SEO::make(['title', 'description']),
-                            ])
-                            ->collapsible()
-                            ->collapsed(),
+                        // Forms\Components\Section::make('SEO')
+                        //     ->description(__('filament-shop::default.seo.description'))
+                        //     ->schema([
+                        //         SEO::make(['title', 'description']),
+                        //     ])
+                        //     ->collapsible()
+                        //     ->collapsed(),
 
                         Forms\Components\Section::make(__('filament-shop::default.products.inventory.label'))
                             ->schema([
@@ -413,7 +412,8 @@ class ProductResource extends Resource
                 ->weight(FontWeight::ExtraBold)
                 ->searchable()
                 ->sortable()
-                ->toggleable(),
+                ->toggleable()
+                ->toggledHiddenByDefault(),
 
             Tables\Columns\ToggleColumn::make('visible')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.status.visible.label'), 'heroicon-c-eye'))
@@ -442,6 +442,20 @@ class ProductResource extends Resource
 
             Tables\Columns\TextColumn::make('published_at')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.status.published_at.label'), 'heroicon-c-calendar'))
+                ->date()
+                ->sortable()
+                ->toggleable()
+                ->toggledHiddenByDefault(),
+
+            Tables\Columns\TextColumn::make('created_at')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.created_at.label'), 'heroicon-c-calendar'))
+                ->date()
+                ->sortable()
+                ->toggleable()
+                ->toggledHiddenByDefault(),
+
+            Tables\Columns\TextColumn::make('updated_at')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.updated_at.label'), 'heroicon-c-calendar'))
                 ->date()
                 ->sortable()
                 ->toggleable()
@@ -498,6 +512,7 @@ class ProductResource extends Resource
             ], layout: Tables\Enums\FiltersLayout::AboveContentCollapsible)
             // ->deferFilters()
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

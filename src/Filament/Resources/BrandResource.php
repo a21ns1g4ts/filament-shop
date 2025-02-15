@@ -117,20 +117,34 @@ class BrandResource extends Resource
                 Tables\Columns\TextColumn::make('website')
                     ->label(__('filament-shop::default.brands.main.website.label'))
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
                 Tables\Columns\IconColumn::make('visible')
                     ->label(__('filament-shop::default.brands.main.visible.label'))
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label(__('filament-shop::default.brands.main.updated_at.label'))
                     ->date()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('filament-shop::default.brands.main.created_at.label'))
+                    ->date()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->groupedBulkActions([
                 // Tables\Actions\DeleteBulkAction::make()

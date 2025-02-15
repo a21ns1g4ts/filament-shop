@@ -94,11 +94,16 @@ return [
             'images' => [
                 'label' => 'Imagens',
             ],
+            'created_at' => [
+                'label' => 'Criado em',
+            ],
+            'updated_at' => [
+                'label' => 'Última modificação em',
+            ],
         ],
 
         'pricing' => [
             'label' => 'Preço',
-            'description' => 'Informações de preço do produto.',
             'price' => [
                 'label' => 'Preço',
                 'helper_text' => 'O preço do produto.',
