@@ -131,18 +131,26 @@ class CategoryResource extends Resource
                 Tables\Columns\TextColumn::make('parent.name')
                     ->label(__('filament-shop::default.categories.main.parent.label'))
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
                 Tables\Columns\IconColumn::make('visible')
                     ->label(__('filament-shop::default.categories.main.visible.label'))
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label(__('filament-shop::default.categories.main.updated_at.label'))
                     ->date()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('filament-shop::default.categories.main.created_at.label'))
                     ->date()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
             ])
             ->filters([
                 //
