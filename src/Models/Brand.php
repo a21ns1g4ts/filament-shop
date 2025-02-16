@@ -30,9 +30,6 @@ class Brand extends Model implements HasMedia
         'active',
         'visible',
         'sort',
-        'seo_title',
-        'seo_description',
-        'sort',
     ];
 
     /**

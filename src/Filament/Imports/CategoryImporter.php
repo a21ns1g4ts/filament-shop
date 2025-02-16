@@ -36,14 +36,6 @@ class CategoryImporter extends Importer
                 ->boolean()
                 ->rules(['required', 'boolean'])
                 ->example('yes'),
-            ImportColumn::make('seo_title')
-                ->label('SEO title')
-                ->rules(['max:60'])
-                ->example('Awesome Category A'),
-            ImportColumn::make('seo_description')
-                ->label('SEO description')
-                ->rules(['max:160'])
-                ->example('Wow! It\'s just so amazing.'),
         ];
     }
 

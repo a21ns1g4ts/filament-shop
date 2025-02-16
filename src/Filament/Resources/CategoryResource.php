@@ -94,12 +94,12 @@ class CategoryResource extends Resource
                                     ->label(__('filament-shop::default.categories.main.description.label')),
                             ]),
 
-                        Forms\Components\Section::make('SEO')
-                            ->description(__('filament-shop::default.seo.description'))
-                            ->schema([
-                                SEO::make(['title', 'description']),
-                            ])
-                            ->collapsible(),
+                        // Forms\Components\Section::make('SEO')
+                        //     ->description(__('filament-shop::default.seo.description'))
+                        //     ->schema([
+                        //         SEO::make(['title', 'description']),
+                        //     ])
+                        //     ->collapsible(),
                     ])
                     ->columnSpan(['lg' => fn (?Category $record) => $record === null ? 3 : 2]),
                 Forms\Components\Section::make()

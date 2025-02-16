@@ -30,8 +30,6 @@ class Category extends Model implements HasMedia
         'description',
         'active',
         'visible',
-        'seo_title',
-        'seo_description',
         'sort',
     ];
 
