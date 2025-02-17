@@ -423,30 +423,35 @@ class ProductResource extends Resource
                 ->toggleable()
                 ->toggledHiddenByDefault(),
 
+            Tables\Columns\ToggleColumn::make('active')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.status.active.label'), 'heroicon-c-check'))
+                ->sortable()
+                ->toggleable(),
+
             Tables\Columns\ToggleColumn::make('visible')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.status.visible.label'), 'heroicon-c-eye'))
                 ->sortable()
                 ->toggleable(),
 
-            Tables\Columns\ToggleColumn::make('pinned')
-                ->label(self::getLabelRaw(__('filament-shop::default.products.status.pinned.label'), 'heroicon-c-map-pin'))
-                ->sortable()
-                ->toggleable(),
+            // Tables\Columns\ToggleColumn::make('pinned')
+            //     ->label(self::getLabelRaw(__('filament-shop::default.products.status.pinned.label'), 'heroicon-c-map-pin'))
+            //     ->sortable()
+            //     ->toggleable(),
 
-            Tables\Columns\TextColumn::make('quantity')
-                ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.quantity.label'), 'heroicon-c-cube'))
-                ->weight(FontWeight::ExtraBold)
-                ->searchable()
-                ->sortable()
-                ->toggleable()
-                ->toggledHiddenByDefault(),
+            // Tables\Columns\TextColumn::make('quantity')
+            //     ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.quantity.label'), 'heroicon-c-cube'))
+            //     ->weight(FontWeight::ExtraBold)
+            //     ->searchable()
+            //     ->sortable()
+            //     ->toggleable()
+            //     ->toggledHiddenByDefault(),
 
-            Tables\Columns\TextColumn::make('security_stock')
-                ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.security_stock.label'), 'heroicon-c-lock-closed'))
-                ->searchable()
-                ->sortable()
-                ->toggleable()
-                ->toggledHiddenByDefault(),
+            // Tables\Columns\TextColumn::make('security_stock')
+            //     ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.security_stock.label'), 'heroicon-c-lock-closed'))
+            //     ->searchable()
+            //     ->sortable()
+            //     ->toggleable()
+            //     ->toggledHiddenByDefault(),
 
             Tables\Columns\TextColumn::make('published_at')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.status.published_at.label'), 'heroicon-c-calendar'))
@@ -563,10 +568,8 @@ class ProductResource extends Resource
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
-        /** @var Product $record */
-
         return [
-            'Brand' => optional($record->brand)->name,
+            __('filament-shop::default.categories.model_label') => optional($record->category)->name,
         ];
     }
 
