@@ -153,17 +153,17 @@ class ProductResource extends Resource
                                     ->unique(Product::class, 'barcode', ignoreRecord: true)
                                     ->maxLength(255),
 
-                                Forms\Components\TextInput::make('quantity')
-                                    ->label(__('filament-shop::default.products.inventory.quantity.label'))
-                                    ->helperText(__('filament-shop::default.products.inventory.quantity.helper_text'))
-                                    ->numeric()
-                                    ->rules(['integer', 'min:0', 'nullable']),
+                                // Forms\Components\TextInput::make('quantity')
+                                //     ->label(__('filament-shop::default.products.inventory.quantity.label'))
+                                //     ->helperText(__('filament-shop::default.products.inventory.quantity.helper_text'))
+                                //     ->numeric()
+                                //     ->rules(['integer', 'min:0', 'nullable']),
 
-                                Forms\Components\TextInput::make('security_stock')
-                                    ->label(__('filament-shop::default.products.inventory.security_stock.label'))
-                                    ->helperText(__('filament-shop::default.products.inventory.security_stock.helper_text'))
-                                    ->numeric()
-                                    ->rules(['integer', 'min:0', 'nullable']),
+                                // Forms\Components\TextInput::make('security_stock')
+                                //     ->label(__('filament-shop::default.products.inventory.security_stock.label'))
+                                //     ->helperText(__('filament-shop::default.products.inventory.security_stock.helper_text'))
+                                //     ->numeric()
+                                //     ->rules(['integer', 'min:0', 'nullable']),
                             ])
                             ->collapsible()
                             ->columns(2),
@@ -179,9 +179,9 @@ class ProductResource extends Resource
                                     ->helperText(__('filament-shop::default.products.status.visible.helper_text'))
                                     ->default(true),
 
-                                Forms\Components\Checkbox::make('pinned')
-                                    ->label(__('filament-shop::default.products.status.pinned.label'))
-                                    ->helperText(__('filament-shop::default.products.status.pinned.helper_text')),
+                                // Forms\Components\Checkbox::make('pinned')
+                                //     ->label(__('filament-shop::default.products.status.pinned.label'))
+                                //     ->helperText(__('filament-shop::default.products.status.pinned.helper_text')),
 
                                 Forms\Components\DatePicker::make('published_at')
                                     ->label(__('filament-shop::default.products.status.published_at.label'))
@@ -216,6 +216,10 @@ class ProductResource extends Resource
                                             ->label(__('filament-shop::default.brands.main.website.label'))
                                             ->maxLength(255)
                                             ->url(),
+
+                                        Forms\Components\Toggle::make('active')
+                                            ->label(__('filament-shop::default.brands.main.active.label'))
+                                            ->default(true),
 
                                         Forms\Components\Toggle::make('visible')
                                             ->label(__('filament-shop::default.brands.main.visible.label'))
@@ -264,6 +268,10 @@ class ProductResource extends Resource
                                             ->preload()
                                             ->searchable()
                                             ->placeholder(__('filament-shop::default.categories.main.parent.placeholder')),
+
+                                        Forms\Components\Toggle::make('active')
+                                            ->label(__('filament-shop::default.categories.main.active.label'))
+                                            ->default(true),
 
                                         Forms\Components\Toggle::make('visible')
                                             ->label(__('filament-shop::default.categories.main.visible.label'))

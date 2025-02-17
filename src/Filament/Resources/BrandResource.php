@@ -76,6 +76,10 @@ class BrandResource extends Resource
                             ->maxLength(255)
                             ->url(),
 
+                        Forms\Components\Toggle::make('active')
+                            ->label(__('filament-shop::default.brands.main.active.label'))
+                            ->default(true),
+
                         Forms\Components\Toggle::make('visible')
                             ->label(__('filament-shop::default.brands.main.visible.label'))
                             ->default(true),

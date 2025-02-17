@@ -21,6 +21,9 @@ return [
         'model_label' => 'Categoria',
         'plural_model_label' => 'Categorias',
         'main' => [
+            'active' => [
+                'label' => 'Ativa',
+            ],
             'name' => [
                 'label' => 'Nome',
             ],
@@ -53,6 +56,9 @@ return [
         'export_label' => 'Exportar',
         'export_heading' => 'Exportar Marcas',
         'main' => [
+            'active' => [
+                'label' => 'Ativa',
+            ],
             'name' => [
                 'label' => 'Nome',
             ],

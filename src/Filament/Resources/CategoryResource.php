@@ -82,6 +82,10 @@ class CategoryResource extends Resource
                                     ->searchable()
                                     ->placeholder(__('filament-shop::default.categories.main.parent.placeholder')),
 
+                                Forms\Components\Toggle::make('active')
+                                    ->label(__('filament-shop::default.categories.main.active.label'))
+                                    ->default(true),
+
                                 Forms\Components\Toggle::make('visible')
                                     ->label(__('filament-shop::default.categories.main.visible.label'))
                                     ->default(true),
