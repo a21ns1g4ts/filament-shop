@@ -481,7 +481,7 @@ class ProductResource extends Resource
             //     ->alignment(Alignment::End),
 
             Tables\Columns\TextColumn::make('created_at')
-                ->label(self::getLabelRaw(__('filament-shop::default.products.created_at.label'), 'heroicon-c-calendar'))
+                ->label(self::getLabelRaw(__('filament-shop::default.products.main.created_at.label'), 'heroicon-c-calendar'))
                 ->date()
                 ->sortable()
                 ->toggleable()
@@ -489,7 +489,7 @@ class ProductResource extends Resource
                 ->alignment(Alignment::End),
 
             Tables\Columns\TextColumn::make('updated_at')
-                ->label(self::getLabelRaw(__('filament-shop::default.products.updated_at.label'), 'heroicon-c-calendar'))
+                ->label(self::getLabelRaw(__('filament-shop::default.products.main.updated_at.label'), 'heroicon-c-calendar'))
                 ->date()
                 ->sortable()
                 ->toggleable()
