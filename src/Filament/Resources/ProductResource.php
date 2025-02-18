@@ -15,6 +15,7 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Filters\QueryBuilder;
@@ -77,14 +78,27 @@ class ProductResource extends Resource
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state)))
+                                    ->columnSpanFull(),
 
-                                Forms\Components\TextInput::make('slug')
-                                    ->label(__('filament-shop::default.products.main.slug.label'))
-                                    ->disabled()
-                                    ->dehydrated()
-                                    ->required()
-                                    ->maxLength(255),
+                                Forms\Components\Group::make([
+                                    Forms\Components\TextInput::make('price')
+                                        ->label(__('filament-shop::default.products.main.price.label'))
+                                        ->helperText(__('filament-shop::default.products.main.price.helper_text'))
+                                        ->required()
+                                        ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision())
+                                        ->columnSpan(1),
+
+                                    Forms\Components\TextInput::make('slug')
+                                        ->label(__('filament-shop::default.products.main.slug.label'))
+                                        ->disabled()
+                                        ->dehydrated()
+                                        ->required()
+                                        ->maxLength(255)
+                                        ->columnSpan(2),
+                                ])
+                                    ->columnSpanFull()
+                                    ->columns(3),
 
                                 Forms\Components\MarkdownEditor::make('description')
                                     // TODO: add support for file attachments compatible with s3 storage
@@ -92,30 +106,30 @@ class ProductResource extends Resource
                                         'attachFiles',
                                     ])
                                     ->label(__('filament-shop::default.products.main.description.label'))
-                                    ->columnSpan('full'),
+                                    ->columnSpanFull(),
                             ])
                             ->columns(2),
 
-                        Forms\Components\Section::make(__('filament-shop::default.products.pricing.label'))
-                            ->schema([
-                                Forms\Components\TextInput::make('price')
-                                    ->label(__('filament-shop::default.products.pricing.price.label'))
-                                    ->helperText(__('filament-shop::default.products.pricing.price.helper_text'))
-                                    ->required()
-                                    ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision()),
+                        // Forms\Components\Section::make(__('filament-shop::default.products.pricing.label'))
+                        //     ->schema([
+                        //         Forms\Components\TextInput::make('price')
+                        //             ->label(__('filament-shop::default.products.pricing.price.label'))
+                        //             ->helperText(__('filament-shop::default.products.pricing.price.helper_text'))
+                        //             ->required()
+                        //             ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision()),
 
-                                Forms\Components\TextInput::make('original_price')
-                                    ->label(__('filament-shop::default.products.pricing.original_price.label'))
-                                    ->helperText(__('filament-shop::default.products.pricing.original_price.helper_text'))
-                                    ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision()),
+                        //         Forms\Components\TextInput::make('original_price')
+                        //             ->label(__('filament-shop::default.products.pricing.original_price.label'))
+                        //             ->helperText(__('filament-shop::default.products.pricing.original_price.helper_text'))
+                        //             ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision()),
 
-                                Forms\Components\TextInput::make('cost')
-                                    ->label(__('filament-shop::default.products.pricing.cost.label'))
-                                    ->helperText(__('filament-shop::default.products.pricing.cost.helper_text'))
-                                    ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision()),
-                            ])
-                            ->collapsible()
-                            ->columns(3),
+                        //         Forms\Components\TextInput::make('cost')
+                        //             ->label(__('filament-shop::default.products.pricing.cost.label'))
+                        //             ->helperText(__('filament-shop::default.products.pricing.cost.helper_text'))
+                        //             ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision()),
+                        //     ])
+                        //     ->collapsible()
+                        //     ->columns(3),
 
                         Forms\Components\Section::make(__('filament-shop::default.products.main.images.label'))
                             ->schema([
@@ -138,37 +152,8 @@ class ProductResource extends Resource
                         //     ])
                         //     ->collapsible()
                         //     ->collapsed(),
-
-                        Forms\Components\Section::make(__('filament-shop::default.products.inventory.label'))
-                            ->schema([
-                                Forms\Components\TextInput::make('sku')
-                                    ->label(__('filament-shop::default.products.inventory.sku.label'))
-                                    ->helperText(__('filament-shop::default.products.inventory.sku.helper_text'))
-                                    ->unique(Product::class, 'sku', ignoreRecord: true)
-                                    ->maxLength(255),
-
-                                Forms\Components\TextInput::make('barcode')
-                                    ->label(__('filament-shop::default.products.inventory.barcode.label'))
-                                    ->helperText(__('filament-shop::default.products.inventory.barcode.helper_text'))
-                                    ->unique(Product::class, 'barcode', ignoreRecord: true)
-                                    ->maxLength(255),
-
-                                // Forms\Components\TextInput::make('quantity')
-                                //     ->label(__('filament-shop::default.products.inventory.quantity.label'))
-                                //     ->helperText(__('filament-shop::default.products.inventory.quantity.helper_text'))
-                                //     ->numeric()
-                                //     ->rules(['integer', 'min:0', 'nullable']),
-
-                                // Forms\Components\TextInput::make('security_stock')
-                                //     ->label(__('filament-shop::default.products.inventory.security_stock.label'))
-                                //     ->helperText(__('filament-shop::default.products.inventory.security_stock.helper_text'))
-                                //     ->numeric()
-                                //     ->rules(['integer', 'min:0', 'nullable']),
-                            ])
-                            ->collapsible()
-                            ->columns(2),
                     ])
-                    ->columnSpan(['lg' => 2]),
+                    ->columnSpan(2),
 
                 Forms\Components\Group::make()
                     ->schema([
@@ -183,11 +168,11 @@ class ProductResource extends Resource
                                 //     ->label(__('filament-shop::default.products.status.pinned.label'))
                                 //     ->helperText(__('filament-shop::default.products.status.pinned.helper_text')),
 
-                                Forms\Components\DatePicker::make('published_at')
-                                    ->label(__('filament-shop::default.products.status.published_at.label'))
-                                    ->helperText(__('filament-shop::default.products.status.published_at.helper_text'))
-                                    ->default(now())
-                                    ->required(),
+                                // Forms\Components\DatePicker::make('published_at')
+                                //     ->label(__('filament-shop::default.products.status.published_at.label'))
+                                //     ->helperText(__('filament-shop::default.products.status.published_at.helper_text'))
+                                //     ->default(now())
+                                //     ->required(),
                             ]),
 
                         Forms\Components\Section::make(__('filament-shop::default.products.associations.label'))
@@ -244,59 +229,90 @@ class ProductResource extends Resource
                                             ->modalWidth('lg');
                                     }),
 
-                                Forms\Components\Select::make('brand_id')
-                                    ->label(__('filament-shop::default.products.associations.brand.label'))
-                                    ->relationship('brand', 'name')
-                                    ->preload()
-                                    ->searchable()
-                                    ->createOptionForm([
-                                        Forms\Components\TextInput::make('name')
-                                            ->label(__('filament-shop::default.brands.main.name.label'))
-                                            ->required()
-                                            ->maxLength(255)
-                                            ->live(onBlur: true)
-                                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                // Forms\Components\Select::make('brand_id')
+                                //     ->label(__('filament-shop::default.products.associations.brand.label'))
+                                //     ->relationship('brand', 'name')
+                                //     ->preload()
+                                //     ->searchable()
+                                //     ->createOptionForm([
+                                //         Forms\Components\TextInput::make('name')
+                                //             ->label(__('filament-shop::default.brands.main.name.label'))
+                                //             ->required()
+                                //             ->maxLength(255)
+                                //             ->live(onBlur: true)
+                                //             ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
-                                        Forms\Components\TextInput::make('slug')
-                                            ->label(__('filament-shop::default.brands.main.slug.label'))
-                                            ->disabled()
-                                            ->dehydrated()
-                                            ->required()
-                                            ->maxLength(255),
+                                //         Forms\Components\TextInput::make('slug')
+                                //             ->label(__('filament-shop::default.brands.main.slug.label'))
+                                //             ->disabled()
+                                //             ->dehydrated()
+                                //             ->required()
+                                //             ->maxLength(255),
 
-                                        Forms\Components\TextInput::make('website')
-                                            ->label(__('filament-shop::default.brands.main.website.label'))
-                                            ->maxLength(255)
-                                            ->url(),
+                                //         Forms\Components\TextInput::make('website')
+                                //             ->label(__('filament-shop::default.brands.main.website.label'))
+                                //             ->maxLength(255)
+                                //             ->url(),
 
-                                        Forms\Components\Toggle::make('active')
-                                            ->label(__('filament-shop::default.brands.main.active.label'))
-                                            ->default(true),
+                                //         Forms\Components\Toggle::make('active')
+                                //             ->label(__('filament-shop::default.brands.main.active.label'))
+                                //             ->default(true),
 
-                                        Forms\Components\Toggle::make('visible')
-                                            ->label(__('filament-shop::default.brands.main.visible.label'))
-                                            ->default(true),
+                                //         Forms\Components\Toggle::make('visible')
+                                //             ->label(__('filament-shop::default.brands.main.visible.label'))
+                                //             ->default(true),
 
-                                        Forms\Components\MarkdownEditor::make('description')
-                                            // TODO: add support for file attachments compatible with s3 storage
-                                            ->disableToolbarButtons([
-                                                'attachFiles',
-                                            ])
-                                            ->label(__('filament-shop::default.brands.main.description.label')),
-                                    ])
-                                    ->createOptionAction(function (Action $action) {
-                                        return $action
-                                            ->modalHeading('Criar Marca')
-                                            ->modalSubmitActionLabel('Criar')
-                                            ->modalWidth('lg');
-                                    }),
+                                //         Forms\Components\MarkdownEditor::make('description')
+                                //             // TODO: add support for file attachments compatible with s3 storage
+                                //             ->disableToolbarButtons([
+                                //                 'attachFiles',
+                                //             ])
+                                //             ->label(__('filament-shop::default.brands.main.description.label')),
+                                //     ])
+                                //     ->createOptionAction(function (Action $action) {
+                                //         return $action
+                                //             ->modalHeading('Criar Marca')
+                                //             ->modalSubmitActionLabel('Criar')
+                                //             ->modalWidth('lg');
+                                //     }),
                             ]),
 
-                        Forms\Components\Section::make(__('filament-shop::default.products.meta.label'))
+                        // Forms\Components\Section::make(__('filament-shop::default.products.meta.label'))
+                        //     ->schema([
+                        //         Forms\Components\KeyValue::make('meta')
+                        //             ->label(__('filament-shop::default.products.meta.label')),
+                        //     ]),
+
+                        Forms\Components\Section::make(__('filament-shop::default.products.inventory.label'))
                             ->schema([
-                                Forms\Components\KeyValue::make('meta')
-                                    ->label(__('filament-shop::default.products.meta.label')),
-                            ]),
+                                Forms\Components\TextInput::make('sku')
+                                    ->label(__('filament-shop::default.products.inventory.sku.label'))
+                                    ->helperText(__('filament-shop::default.products.inventory.sku.helper_text'))
+                                    ->unique(Product::class, 'sku', ignoreRecord: true)
+                                    ->maxLength(255)
+                                    ->columnSpanFull(),
+
+                                Forms\Components\TextInput::make('barcode')
+                                    ->label(__('filament-shop::default.products.inventory.barcode.label'))
+                                    ->helperText(__('filament-shop::default.products.inventory.barcode.helper_text'))
+                                    ->unique(Product::class, 'barcode', ignoreRecord: true)
+                                    ->maxLength(255)
+                                    ->columnSpanFull(),
+
+                                // Forms\Components\TextInput::make('quantity')
+                                //     ->label(__('filament-shop::default.products.inventory.quantity.label'))
+                                //     ->helperText(__('filament-shop::default.products.inventory.quantity.helper_text'))
+                                //     ->numeric()
+                                //     ->rules(['integer', 'min:0', 'nullable']),
+
+                                // Forms\Components\TextInput::make('security_stock')
+                                //     ->label(__('filament-shop::default.products.inventory.security_stock.label'))
+                                //     ->helperText(__('filament-shop::default.products.inventory.security_stock.helper_text'))
+                                //     ->numeric()
+                                //     ->rules(['integer', 'min:0', 'nullable']),
+                            ])
+                            ->collapsible()
+                            ->columns(2),
                     ])
                     ->columnSpan(['lg' => 1]),
             ])
@@ -334,7 +350,6 @@ class ProductResource extends Resource
                             ->square()
                             ->height('80px')
                             ->stacked()
-                            ->toggleable()
                             ->grow(false),
 
                         \Filament\Tables\Columns\Layout\Grid::make()
@@ -357,6 +372,10 @@ class ProductResource extends Resource
                 ]),
 
             Tables\Columns\Layout\Panel::make([
+                Tables\Columns\TextColumn::make('description')
+                    ->label(__('filament-shop::default.products.main.description.label'))
+                    ->wrap()
+                    ->toggledHiddenByDefault(),
                 Tables\Columns\TextColumn::make('categories.name')
                     ->badge(),
             ])
@@ -398,21 +417,24 @@ class ProductResource extends Resource
                 ->weight(FontWeight::ExtraBold)
                 ->currency(FilamentShop::getCurrency())
                 ->sortable()
-                ->toggleable(),
-
-            Tables\Columns\TextColumn::make('original_price')
-                ->label(self::getLabelRaw(__('filament-shop::default.products.pricing.original_price.label'), 'heroicon-c-currency-dollar'))
-                ->currency(FilamentShop::getCurrency())
-                ->sortable()
                 ->toggleable()
-                ->toggledHiddenByDefault(),
+                ->alignment(Alignment::End),
 
-            Tables\Columns\TextColumn::make('cost')
-                ->label(self::getLabelRaw(__('filament-shop::default.products.pricing.cost.label'), 'heroicon-c-currency-dollar'))
-                ->currency(FilamentShop::getCurrency())
-                ->sortable()
-                ->toggleable()
-                ->toggledHiddenByDefault(),
+            // Tables\Columns\TextColumn::make('original_price')
+            //     ->label(self::getLabelRaw(__('filament-shop::default.products.pricing.original_price.label'), 'heroicon-c-currency-dollar'))
+            //     ->currency(FilamentShop::getCurrency())
+            //     ->sortable()
+            //     ->toggleable()
+            //     ->toggledHiddenByDefault()
+            //     ->alignment(Alignment::End),
+
+            // Tables\Columns\TextColumn::make('cost')
+            //     ->label(self::getLabelRaw(__('filament-shop::default.products.pricing.cost.label'), 'heroicon-c-currency-dollar'))
+            //     ->currency(FilamentShop::getCurrency())
+            //     ->sortable()
+            //     ->toggleable()
+            //     ->toggledHiddenByDefault()
+            //     ->alignment(Alignment::End),
 
             Tables\Columns\TextColumn::make('sku')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.inventory.sku.label'), 'heroicon-c-tag'))
@@ -421,17 +443,14 @@ class ProductResource extends Resource
                 ->searchable()
                 ->sortable()
                 ->toggleable()
-                ->toggledHiddenByDefault(),
-
-            Tables\Columns\ToggleColumn::make('active')
-                ->label(self::getLabelRaw(__('filament-shop::default.products.status.active.label'), 'heroicon-c-check'))
-                ->sortable()
-                ->toggleable(),
+                ->toggledHiddenByDefault()
+                ->alignment(Alignment::End),
 
             Tables\Columns\ToggleColumn::make('visible')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.status.visible.label'), 'heroicon-c-eye'))
                 ->sortable()
-                ->toggleable(),
+                ->toggleable()
+                ->alignment(Alignment::End),
 
             // Tables\Columns\ToggleColumn::make('pinned')
             //     ->label(self::getLabelRaw(__('filament-shop::default.products.status.pinned.label'), 'heroicon-c-map-pin'))
@@ -453,26 +472,29 @@ class ProductResource extends Resource
             //     ->toggleable()
             //     ->toggledHiddenByDefault(),
 
-            Tables\Columns\TextColumn::make('published_at')
-                ->label(self::getLabelRaw(__('filament-shop::default.products.status.published_at.label'), 'heroicon-c-calendar'))
-                ->date()
-                ->sortable()
-                ->toggleable()
-                ->toggledHiddenByDefault(),
+            // Tables\Columns\TextColumn::make('published_at')
+            //     ->label(self::getLabelRaw(__('filament-shop::default.products.status.published_at.label'), 'heroicon-c-calendar'))
+            //     ->date()
+            //     ->sortable()
+            //     ->toggleable()
+            //     ->toggledHiddenByDefault()
+            //     ->alignment(Alignment::End),
 
             Tables\Columns\TextColumn::make('created_at')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.created_at.label'), 'heroicon-c-calendar'))
                 ->date()
                 ->sortable()
                 ->toggleable()
-                ->toggledHiddenByDefault(),
+                ->toggledHiddenByDefault()
+                ->alignment(Alignment::End),
 
             Tables\Columns\TextColumn::make('updated_at')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.updated_at.label'), 'heroicon-c-calendar'))
                 ->date()
                 ->sortable()
                 ->toggleable()
-                ->toggledHiddenByDefault(),
+                ->toggledHiddenByDefault()
+                ->alignment(Alignment::End),
         ];
     }
 
@@ -486,10 +508,11 @@ class ProductResource extends Resource
                     ->relationship('categories', 'name')
                     ->preload()
                     ->multiple(),
-                \Filament\Tables\Filters\SelectFilter::make('brand_id')
-                    ->label(__('filament-shop::default.products.associations.brand.label'))
-                    ->relationship('brand', 'name')
-                    ->preload(),
+                // \Filament\Tables\Filters\SelectFilter::make('brand_id')
+                //     ->label(__('filament-shop::default.products.associations.brand.label'))
+                //     ->relationship('brand', 'name')
+                //     ->preload()
+                //     ->multiple(),
                 // QueryBuilder::make()
                 //     ->constraints([
                 //         TextConstraint::make('name')
@@ -563,21 +586,21 @@ class ProductResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['name', 'sku', 'brand.name'];
+        return ['name', 'sku'];
     }
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
-            __('filament-shop::default.categories.model_label') => optional($record->category)->name,
+            __('filament-shop::default.categories.plural_model_label') => optional($record->categories)->pluck('name')->implode(', '),
         ];
     }
 
     /** @return Builder<Product> */
-    public static function getGlobalSearchEloquentQuery(): Builder
-    {
-        return parent::getGlobalSearchEloquentQuery()->with(['brand']);
-    }
+    // public static function getGlobalSearchEloquentQuery(): Builder
+    // {
+    //     return parent::getGlobalSearchEloquentQuery()->with(['brand']);
+    // }
 
     public static function getNavigationBadge(): ?string
     {
