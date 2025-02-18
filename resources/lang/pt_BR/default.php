@@ -44,7 +44,7 @@ return [
                 'label' => 'Criado em',
             ],
             'updated_at' => [
-                'label' => 'Última modificação em',
+                'label' => 'Atualizado em',
             ],
         ],
     ],
@@ -78,7 +78,7 @@ return [
                 'label' => 'Criado em',
             ],
             'updated_at' => [
-                'label' => 'Última modificação em',
+                'label' => 'Atualizado em',
             ],
         ],
     ],
@@ -90,6 +90,10 @@ return [
         'main' => [
             'name' => [
                 'label' => 'Nome',
+            ],
+            'price' => [
+                'label' => 'Preço',
+                'helper_text' => 'O preço do produto.',
             ],
             'slug' => [
                 'label' => 'Slug',
@@ -104,7 +108,7 @@ return [
                 'label' => 'Criado em',
             ],
             'updated_at' => [
-                'label' => 'Última modificação em',
+                'label' => 'Atualizado em',
             ],
         ],
 
@@ -125,7 +129,7 @@ return [
         ],
 
         'inventory' => [
-            'label' => 'Estoque',
+            'label' => 'Inventário',
             'sku' => [
                 'label' => 'SKU',
                 'helper_text' => 'O SKU (Unidade de estoque) é um identificador exclusivo para o produto.',

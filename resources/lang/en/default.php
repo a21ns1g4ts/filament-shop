@@ -91,6 +91,10 @@ return [
             'name' => [
                 'label' => 'Name',
             ],
+            'price' => [
+                'label' => 'Price',
+                'helper_text' => 'The price of the product.',
+            ],
             'slug' => [
                 'label' => 'Slug',
             ],
