@@ -229,52 +229,52 @@ class ProductResource extends Resource
                                             ->modalWidth('lg');
                                     }),
 
-                                // Forms\Components\Select::make('brand_id')
-                                //     ->label(__('filament-shop::default.products.associations.brand.label'))
-                                //     ->relationship('brand', 'name')
-                                //     ->preload()
-                                //     ->searchable()
-                                //     ->createOptionForm([
-                                //         Forms\Components\TextInput::make('name')
-                                //             ->label(__('filament-shop::default.brands.main.name.label'))
-                                //             ->required()
-                                //             ->maxLength(255)
-                                //             ->live(onBlur: true)
-                                //             ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                Forms\Components\Select::make('brand_id')
+                                    ->label(__('filament-shop::default.products.associations.brand.label'))
+                                    ->relationship('brand', 'name')
+                                    ->preload()
+                                    ->searchable()
+                                    ->createOptionForm([
+                                        Forms\Components\TextInput::make('name')
+                                            ->label(__('filament-shop::default.brands.main.name.label'))
+                                            ->required()
+                                            ->maxLength(255)
+                                            ->live(onBlur: true)
+                                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
-                                //         Forms\Components\TextInput::make('slug')
-                                //             ->label(__('filament-shop::default.brands.main.slug.label'))
-                                //             ->disabled()
-                                //             ->dehydrated()
-                                //             ->required()
-                                //             ->maxLength(255),
+                                        Forms\Components\TextInput::make('slug')
+                                            ->label(__('filament-shop::default.brands.main.slug.label'))
+                                            ->disabled()
+                                            ->dehydrated()
+                                            ->required()
+                                            ->maxLength(255),
 
-                                //         Forms\Components\TextInput::make('website')
-                                //             ->label(__('filament-shop::default.brands.main.website.label'))
-                                //             ->maxLength(255)
-                                //             ->url(),
+                                        Forms\Components\TextInput::make('website')
+                                            ->label(__('filament-shop::default.brands.main.website.label'))
+                                            ->maxLength(255)
+                                            ->url(),
 
-                                //         Forms\Components\Toggle::make('active')
-                                //             ->label(__('filament-shop::default.brands.main.active.label'))
-                                //             ->default(true),
+                                        Forms\Components\Toggle::make('active')
+                                            ->label(__('filament-shop::default.brands.main.active.label'))
+                                            ->default(true),
 
-                                //         Forms\Components\Toggle::make('visible')
-                                //             ->label(__('filament-shop::default.brands.main.visible.label'))
-                                //             ->default(true),
+                                        Forms\Components\Toggle::make('visible')
+                                            ->label(__('filament-shop::default.brands.main.visible.label'))
+                                            ->default(true),
 
-                                //         Forms\Components\MarkdownEditor::make('description')
-                                //             // TODO: add support for file attachments compatible with s3 storage
-                                //             ->disableToolbarButtons([
-                                //                 'attachFiles',
-                                //             ])
-                                //             ->label(__('filament-shop::default.brands.main.description.label')),
-                                //     ])
-                                //     ->createOptionAction(function (Action $action) {
-                                //         return $action
-                                //             ->modalHeading('Criar Marca')
-                                //             ->modalSubmitActionLabel('Criar')
-                                //             ->modalWidth('lg');
-                                //     }),
+                                        Forms\Components\MarkdownEditor::make('description')
+                                            // TODO: add support for file attachments compatible with s3 storage
+                                            ->disableToolbarButtons([
+                                                'attachFiles',
+                                            ])
+                                            ->label(__('filament-shop::default.brands.main.description.label')),
+                                    ])
+                                    ->createOptionAction(function (Action $action) {
+                                        return $action
+                                            ->modalHeading('Criar Marca')
+                                            ->modalSubmitActionLabel('Criar')
+                                            ->modalWidth('lg');
+                                    }),
                             ]),
 
                         // Forms\Components\Section::make(__('filament-shop::default.products.meta.label'))
@@ -412,6 +412,21 @@ class ProductResource extends Resource
                 ->searchable()
                 ->sortable(),
 
+            Tables\Columns\TextColumn::make('categories.name')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.associations.categories.label'), 'heroicon-c-collection'))
+                ->badge()
+                ->searchable()
+                ->sortable()
+                ->toggleable()
+                ->toggledHiddenByDefault(),
+
+            Tables\Columns\TextColumn::make('brand.name')
+                ->label(self::getLabelRaw(__('filament-shop::default.products.associations.brand.label'), 'heroicon-c-tag'))
+                ->searchable()
+                ->sortable()
+                ->toggleable()
+                ->toggledHiddenByDefault(),
+
             Tables\Columns\TextColumn::make('price')
                 ->label(self::getLabelRaw(__('filament-shop::default.products.pricing.price.label'), 'heroicon-c-currency-dollar'))
                 ->weight(FontWeight::ExtraBold)
@@ -508,11 +523,11 @@ class ProductResource extends Resource
                     ->relationship('categories', 'name')
                     ->preload()
                     ->multiple(),
-                // \Filament\Tables\Filters\SelectFilter::make('brand_id')
-                //     ->label(__('filament-shop::default.products.associations.brand.label'))
-                //     ->relationship('brand', 'name')
-                //     ->preload()
-                //     ->multiple(),
+                \Filament\Tables\Filters\SelectFilter::make('brand_id')
+                    ->label(__('filament-shop::default.products.associations.brand.label'))
+                    ->relationship('brand', 'name')
+                    ->preload()
+                    ->multiple(),
                 // QueryBuilder::make()
                 //     ->constraints([
                 //         TextConstraint::make('name')
