@@ -413,7 +413,7 @@ class ProductResource extends Resource
                 ->sortable(),
 
             Tables\Columns\TextColumn::make('categories.name')
-                ->label(self::getLabelRaw(__('filament-shop::default.products.associations.categories.label'), 'heroicon-c-collection'))
+                ->label(self::getLabelRaw(__('filament-shop::default.products.associations.categories.label'), 'heroicon-s-tag'))
                 ->badge()
                 ->searchable()
                 ->sortable()
