@@ -82,12 +82,19 @@ class ProductResource extends Resource
                                     ->columnSpanFull(),
 
                                 Forms\Components\Group::make([
-                                    Forms\Components\TextInput::make('price')
+                                    \Pelmered\FilamentMoneyField\Forms\Components\MoneyInput::make('price')
+                                        ->required()
+                                        ->decimals(2)
                                         ->label(__('filament-shop::default.products.main.price.label'))
                                         ->helperText(__('filament-shop::default.products.main.price.helper_text'))
-                                        ->required()
                                         ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision())
                                         ->columnSpan(1),
+                                    // Forms\Components\TextInput::make('price')
+                                    //     ->label(__('filament-shop::default.products.main.price.label'))
+                                    //     ->helperText(__('filament-shop::default.products.main.price.helper_text'))
+                                    //     ->required()
+                                    //     ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision())
+                                    //     ->columnSpan(1),
 
                                     Forms\Components\TextInput::make('slug')
                                         ->label(__('filament-shop::default.products.main.slug.label'))

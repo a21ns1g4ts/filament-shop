@@ -27,6 +27,7 @@
         "filament/spatie-laravel-media-library-plugin": "^3.2",
         "josespinal/filament-record-navigation": "^2.0",
         "mansoor/filament-unsplash-picker": "^1.0",
+        "pelmered/filament-money-field": "^1.4",
         "ralphjsmit/laravel-filament-seo": "^1.4",
         "ralphjsmit/laravel-seo": "^1.6",
         "spatie/laravel-package-tools": "^1.15.0"
