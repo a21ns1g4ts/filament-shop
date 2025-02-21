@@ -100,7 +100,7 @@ class ProductResource extends Resource
                                     ->columnSpanFull()
                                     ->columns(3),
 
-                                Forms\Components\MarkdownEditor::make('description')
+                                Forms\Components\RichEditor::make('description')
                                     // TODO: add support for file attachments compatible with s3 storage
                                     ->disableToolbarButtons([
                                         'attachFiles',
@@ -215,7 +215,7 @@ class ProductResource extends Resource
                                             ->label(__('filament-shop::default.categories.main.visible.label'))
                                             ->default(true),
 
-                                        Forms\Components\MarkdownEditor::make('description')
+                                        Forms\Components\RichEditor::make('description')
                                             // TODO: add support for file attachments compatible with s3 storage
                                             ->disableToolbarButtons([
                                                 'attachFiles',
@@ -262,7 +262,7 @@ class ProductResource extends Resource
                                             ->label(__('filament-shop::default.brands.main.visible.label'))
                                             ->default(true),
 
-                                        Forms\Components\MarkdownEditor::make('description')
+                                        Forms\Components\RichEditor::make('description')
                                             // TODO: add support for file attachments compatible with s3 storage
                                             ->disableToolbarButtons([
                                                 'attachFiles',
