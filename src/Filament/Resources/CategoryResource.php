@@ -207,7 +207,19 @@ class CategoryResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->before(function (Tables\Actions\DeleteAction $action, Category $record) {
+                        $count = $record->products()->count();
+                        if ($count > 0) {
+                            Notification::make()
+                                ->danger()
+                                ->title(__('filament-shop::default.categories.notifications.cant_delete.title'))
+                                ->body(__('filament-shop::default.categories.notifications.cant_delete.body', ['count' => $count]))
+                                ->send();
+
+                            return $action->cancel();
+                        }
+                    }),
             ])
             ->groupedBulkActions([
                 // Tables\Actions\DeleteBulkAction::make()

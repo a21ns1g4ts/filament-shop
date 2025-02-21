@@ -20,6 +20,12 @@ return [
         'navigation_label' => 'Categorias',
         'model_label' => 'Categoria',
         'plural_model_label' => 'Categorias',
+        'notifications' => [
+            'cant_delete' => [
+                'title' => 'Você não pode excluir esta categoria porque ela possuí produtos associados.',
+                'body' => 'Por favor, remova os :count produtos associados antes de excluir esta categoria.',
+            ],
+        ],
         'main' => [
             'active' => [
                 'label' => 'Ativa',

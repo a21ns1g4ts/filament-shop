@@ -20,6 +20,12 @@ return [
         'navigation_label' => 'Categories',
         'model_label' => 'Category',
         'plural_model_label' => 'Categories',
+        'notifications' => [
+            'cant_delete' => [
+                'title' => 'You can not delete this category because it has associated products.',
+                'body' => 'Please remove the :count associated products before deleting this category.',
+            ],
+        ],
         'main' => [
             'active' => [
                 'label' => 'Active',
