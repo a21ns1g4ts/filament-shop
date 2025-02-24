@@ -126,11 +126,27 @@ return [
             ],
             'original_price' => [
                 'label' => 'Preço original',
-                'helper_text' => 'O preço original do produto.',
+                'helper_text' => 'Para remover desabilite a oferta',
             ],
             'cost' => [
                 'label' => 'Custo',
                 'helper_text' => 'Os clientes não verão este preço.',
+            ],
+            'offer' => [
+                'label' => 'Oferta',
+                'discount' => 'Desconto',
+                'add' => 'Adicionar oferta',
+                'remove' => 'Remover oferta',
+                'notifications' => [
+                    'added' => [
+                        'title' => 'Oferta adicionada com sucesso!',
+                        'body' => 'Agora será exibido para os visitantes da loja o preço em oferta do produto com o desconto.',
+                    ],
+                    'removed' => [
+                        'title' => 'Oferta removida com sucesso!',
+                        'body' => 'O preço em oferta do produto não será mais exibido para os visitantes da loja.',
+                    ],
+                ],
             ],
         ],
 

@@ -81,31 +81,31 @@ class ProductResource extends Resource
                                     ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state)))
                                     ->columnSpanFull(),
 
+                                Forms\Components\TextInput::make('slug')
+                                    ->label(__('filament-shop::default.products.main.slug.label'))
+                                    ->disabled()
+                                    ->dehydrated()
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->columnSpanFull(),
+
                                 Forms\Components\Group::make([
-                                    \Pelmered\FilamentMoneyField\Forms\Components\MoneyInput::make('price')
+                                    Forms\Components\TextInput::make('price')
                                         ->required()
-                                        ->decimals(2)
-                                        ->label(__('filament-shop::default.products.main.price.label'))
+                                        ->label(__('filament-shop::default.products.pricing.price.label'))
                                         ->helperText(__('filament-shop::default.products.main.price.helper_text'))
                                         ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision())
                                         ->columnSpan(1),
-                                    // Forms\Components\TextInput::make('price')
-                                    //     ->label(__('filament-shop::default.products.main.price.label'))
-                                    //     ->helperText(__('filament-shop::default.products.main.price.helper_text'))
-                                    //     ->required()
-                                    //     ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision())
-                                    //     ->columnSpan(1),
 
-                                    Forms\Components\TextInput::make('slug')
-                                        ->label(__('filament-shop::default.products.main.slug.label'))
+                                    Forms\Components\TextInput::make('original_price')
                                         ->disabled()
-                                        ->dehydrated()
-                                        ->required()
-                                        ->maxLength(255)
-                                        ->columnSpan(2),
+                                        ->label(__('filament-shop::default.products.pricing.original_price.label'))
+                                        ->helperText(__('filament-shop::default.products.pricing.original_price.helper_text'))
+                                        ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision())
+                                        ->columnSpan(1),
                                 ])
                                     ->columnSpanFull()
-                                    ->columns(3),
+                                    ->columns(2),
 
                                 Forms\Components\RichEditor::make('description')
                                     // TODO: add support for file attachments compatible with s3 storage

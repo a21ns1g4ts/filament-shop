@@ -126,11 +126,27 @@ return [
             ],
             'original_price' => [
                 'label' => 'Compare at price',
-                'helper_text' => 'The original price of the product.',
+                'helper_text' => 'To remove it, disable the offer.',
             ],
             'cost' => [
                 'label' => 'Cost',
                 'helper_text' => 'Customers wont see this price.',
+            ],
+            'offer' => [
+                'label' => 'Offer',
+                'discount' => 'Discount',
+                'add' => 'Add offer',
+                'remove' => 'Remove offer',
+                'notifications' => [
+                    'added' => [
+                        'title' => 'Offer added successfully!',
+                        'body' => 'The discounted product price will now be displayed to store visitors.',
+                    ],
+                    'removed' => [
+                        'title' => 'Offer removed successfully!',
+                        'body' => 'The discounted product price will no longer be displayed to store visitors.',
+                    ],
+                ],
             ],
         ],
 
