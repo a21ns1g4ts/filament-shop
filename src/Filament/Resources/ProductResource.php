@@ -231,8 +231,8 @@ class ProductResource extends Resource
                                     ])
                                     ->createOptionAction(function (Action $action) {
                                         return $action
-                                            ->modalHeading('Criar Categoria')
-                                            ->modalSubmitActionLabel('Criar')
+                                            ->modalHeading(__('filament-shop::default.categories.create_new'))
+                                            ->modalSubmitActionLabel(__('filament-shop::default.common.create'))
                                             ->modalWidth('lg');
                                     }),
 
@@ -278,8 +278,8 @@ class ProductResource extends Resource
                                     ])
                                     ->createOptionAction(function (Action $action) {
                                         return $action
-                                            ->modalHeading('Criar Marca')
-                                            ->modalSubmitActionLabel('Criar')
+                                            ->modalHeading(__('filament-shop::default.brands.create_new'))
+                                            ->modalSubmitActionLabel(__('filament-shop::default.common.create'))
                                             ->modalWidth('lg');
                                     }),
                             ]),

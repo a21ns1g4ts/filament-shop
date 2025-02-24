@@ -20,6 +20,7 @@ return [
         'navigation_label' => 'Categories',
         'model_label' => 'Category',
         'plural_model_label' => 'Categories',
+        'create_new' => 'Create new category',
         'notifications' => [
             'cant_delete' => [
                 'title' => 'You can not delete this category because it has associated products.',
@@ -58,6 +59,7 @@ return [
     'brands' => [
         'navigation_label' => 'Brands',
         'model_label' => 'Brand',
+        'create_new' => 'Create new brand',
         'plural_model_label' => 'Brands',
         'export_label' => 'Export',
         'export_heading' => 'Export Brands',
@@ -214,5 +216,9 @@ return [
                 ],
             ],
         ],
+    ],
+
+    'common' => [
+        'create' => 'Create',
     ],
 ];

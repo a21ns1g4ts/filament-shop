@@ -20,6 +20,7 @@ return [
         'navigation_label' => 'Categorias',
         'model_label' => 'Categoria',
         'plural_model_label' => 'Categorias',
+        'create_new' => 'Criar nova categoria',
         'notifications' => [
             'cant_delete' => [
                 'title' => 'Você não pode excluir esta categoria porque ela possuí produtos associados.',
@@ -58,6 +59,7 @@ return [
     'brands' => [
         'navigation_label' => 'Marcas',
         'model_label' => 'Marca',
+        'create_new' => 'Criar nova marca',
         'plural_model_label' => 'Marcas',
         'export_label' => 'Exportar',
         'export_heading' => 'Exportar Marcas',
@@ -214,5 +216,9 @@ return [
                 ],
             ],
         ],
+    ],
+
+    'common' => [
+        'create' => 'Criar',
     ],
 ];
