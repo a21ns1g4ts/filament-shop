@@ -21,7 +21,7 @@ class EditProduct extends EditRecord
     {
         return [
             Actions\Action::make('remove_offer')
-                ->label(__('filament-shop::default.products.pricing.offer.removel'))
+                ->label(__('filament-shop::default.products.pricing.offer.remove'))
                 ->visible(isset($this->record->original_price))
                 ->requiresConfirmation()
                 ->action(function (): void {
