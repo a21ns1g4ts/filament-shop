@@ -42,6 +42,7 @@ class EditProduct extends EditRecord
                 }),
             Actions\Action::make('add_offer')
                 ->label(__('filament-shop::default.products.pricing.offer.add'))
+                ->modalSubmitActionLabel(__('filament-shop::default.products.pricing.offer.add'))
                 ->outlined()
                 ->visible(! $this->record->original_price)
                 ->form([
