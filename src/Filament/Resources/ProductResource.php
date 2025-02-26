@@ -142,6 +142,7 @@ class ProductResource extends Resource
                             ->schema([
                                 SpatieMediaLibraryFileUpload::make('media')
                                     ->collection('product-images')
+                                    ->hint(__('filament-shop::default.products.main.images.hint'))
                                     ->image()
                                     ->reorderable()
                                     ->downloadable()

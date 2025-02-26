@@ -111,6 +111,7 @@ return [
             ],
             'images' => [
                 'label' => 'Images',
+                'hint' => 'Add no more than 20 images.',
             ],
             'created_at' => [
                 'label' => 'Created at',

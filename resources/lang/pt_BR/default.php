@@ -111,6 +111,7 @@ return [
             ],
             'images' => [
                 'label' => 'Imagens',
+                'hint' => 'Adicione no maximo 20 imagens.',
             ],
             'created_at' => [
                 'label' => 'Criado em',
