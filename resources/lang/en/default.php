@@ -12,7 +12,7 @@ return [
         'row_plural' => 'rows',
     ],
 
-    'import' => [
+    'imports' => [
         'import_successful' => 'Your import has completed and :count :rows imported.',
         'import_failed' => ':count :rows failed to import.',
         'row' => 'row',

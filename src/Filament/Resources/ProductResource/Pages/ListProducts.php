@@ -21,10 +21,11 @@ class ListProducts extends ListRecords
     protected function getActions(): array
     {
         return [
-            Actions\ImportAction::make()
-                ->importer(ProductImporter::class)
-                ->modalHeading(__('filament-shop::default.products.import_heading'))
-                ->label(__('filament-shop::default.products.import_label')),
+            // TODO: How to load in tenant context ?
+            // Actions\ImportAction::make()
+            //     ->importer(ProductImporter::class)
+            //     ->modalHeading(__('filament-shop::default.products.import_heading'))
+            //     ->label(__('filament-shop::default.products.import_label')),
             Actions\ExportAction::make()
                 ->exporter(ProductExporter::class)
                 ->modalHeading(__('filament-shop::default.products.export_heading'))

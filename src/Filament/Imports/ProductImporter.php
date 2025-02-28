@@ -7,6 +7,7 @@ use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
 
+// TODO: How to load in tenant context ?
 class ProductImporter extends Importer
 {
     public static function getColumns(): array
@@ -65,7 +66,7 @@ class ProductImporter extends Importer
                 ->rules(['nullable', 'numeric'])
                 ->example('100.00'),
             ImportColumn::make('published_at')
-                ->datetime()
+                ->date()
                 ->rules(['nullable', 'date'])
                 ->example('2024-02-27 12:00:00'),
             ImportColumn::make('brand')
