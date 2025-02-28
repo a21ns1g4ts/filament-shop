@@ -7,7 +7,6 @@ use A21ns1g4ts\FilamentShop\Filament\Imports\ProductImporter;
 use A21ns1g4ts\FilamentShop\Filament\Resources\ProductResource;
 use Filament\Actions;
 use Filament\Actions\Exports\Models\Export;
-use Filament\Actions\Imports\Models\Import;
 use Filament\Pages\Concerns\ExposesTableToWidgets;
 use Filament\Resources\Pages\ListRecords;
 use JoseEspinal\RecordNavigation\Traits\HasRecordsList;
@@ -23,9 +22,8 @@ class ListProducts extends ListRecords
     {
         return [
             Actions\ImportAction::make()
-                ->exporter(ProductImporter::class)
+                ->importer(ProductImporter::class)
                 ->modalHeading(__('filament-shop::default.products.import_heading'))
-                ->fileName(fn (Import $import): string => "products-{$import->getKey()}.csv")
                 ->label(__('filament-shop::default.products.import_label')),
             Actions\ExportAction::make()
                 ->exporter(ProductExporter::class)
