@@ -102,6 +102,10 @@ return [
         'navigation_label' => 'Products',
         'model_label' => 'Product',
         'plural_model_label' => 'Products',
+        'export_label' => 'Export',
+        'export_heading' => 'Export Products',
+        'import_label' => 'Import',
+        'import_heading' => 'Import Products',
         'main' => [
             'name' => [
                 'label' => 'Name',

@@ -104,6 +104,8 @@ return [
         'plural_model_label' => 'Produtos',
         'export_label' => 'Exportar',
         'export_heading' => 'Exportar Produtos',
+        'import_label' => 'Importar',
+        'import_heading' => 'Importar Produtos',
         'main' => [
             'name' => [
                 'label' => 'Nome',
