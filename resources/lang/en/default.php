@@ -6,7 +6,7 @@ return [
     ],
 
     'exports' => [
-        'export_successful' => 'Your brand export has completed and :count :rows exported.',
+        'export_successful' => 'Your export has completed and :count :rows exported.',
         'export_failed' => ':count :rows failed to export.',
         'row' => 'row',
         'row_plural' => 'rows',

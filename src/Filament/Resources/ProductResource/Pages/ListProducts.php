@@ -2,8 +2,10 @@
 
 namespace A21ns1g4ts\FilamentShop\Filament\Resources\ProductResource\Pages;
 
+use A21ns1g4ts\FilamentShop\Filament\Exports\ProductExporter;
 use A21ns1g4ts\FilamentShop\Filament\Resources\ProductResource;
 use Filament\Actions;
+use Filament\Actions\Exports\Models\Export;
 use Filament\Pages\Concerns\ExposesTableToWidgets;
 use Filament\Resources\Pages\ListRecords;
 use JoseEspinal\RecordNavigation\Traits\HasRecordsList;
@@ -18,6 +20,11 @@ class ListProducts extends ListRecords
     protected function getActions(): array
     {
         return [
+            Actions\ExportAction::make()
+                ->exporter(ProductExporter::class)
+                ->modalHeading(__('filament-shop::default.products.export_heading'))
+                ->fileName(fn (Export $export): string => "products-{$export->getKey()}.csv")
+                ->label(__('filament-shop::default.products.export_label')),
             Actions\CreateAction::make(),
         ];
     }

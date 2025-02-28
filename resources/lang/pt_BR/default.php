@@ -95,6 +95,8 @@ return [
         'navigation_label' => 'Produtos',
         'model_label' => 'Produto',
         'plural_model_label' => 'Produtos',
+        'export_label' => 'Exportar',
+        'export_heading' => 'Exportar Produtos',
         'main' => [
             'name' => [
                 'label' => 'Nome',
