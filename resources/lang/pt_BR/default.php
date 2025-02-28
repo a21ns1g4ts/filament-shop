@@ -12,6 +12,13 @@ return [
         'row_plural' => 'linhas',
     ],
 
+    'import' => [
+        'import_successful' => 'Sua importação foi concluída com :count :rows importada(s).',
+        'import_failed' => ':count :rows falhou/falharam na importação.',
+        'row' => 'linha',
+        'row_plural' => 'linhas',
+    ],
+
     'seo' => [
         'description' => 'Informações que serão usadas nos motores de busca.',
     ],

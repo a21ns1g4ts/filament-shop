@@ -12,6 +12,13 @@ return [
         'row_plural' => 'rows',
     ],
 
+    'import' => [
+        'import_successful' => 'Your import has completed and :count :rows imported.',
+        'import_failed' => ':count :rows failed to import.',
+        'row' => 'row',
+        'row_plural' => 'rows',
+    ],
+
     'seo' => [
         'description' => 'Informations that will be used in search engines.',
     ],

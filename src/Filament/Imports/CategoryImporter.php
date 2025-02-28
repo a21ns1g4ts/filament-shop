@@ -35,7 +35,7 @@ class CategoryImporter extends Importer
                 ->requiredMapping()
                 ->boolean()
                 ->rules(['required', 'boolean'])
-                ->example('yes'),
+                ->example('1'),
         ];
     }
 
