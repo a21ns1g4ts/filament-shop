@@ -98,7 +98,6 @@ class ProductResource extends Resource
                                         ->columnSpan(1),
 
                                     Forms\Components\TextInput::make('original_price')
-                                        ->visible(fn (Product $record): bool => $record->exists)
                                         ->disabled()
                                         ->label(__('filament-shop::default.products.pricing.original_price.label'))
                                         ->helperText(__('filament-shop::default.products.pricing.original_price.helper_text'))
