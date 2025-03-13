@@ -26,11 +26,11 @@ class ListProducts extends ListRecords
             //     ->importer(ProductImporter::class)
             //     ->modalHeading(__('filament-shop::default.products.import_heading'))
             //     ->label(__('filament-shop::default.products.import_label')),
-            Actions\ExportAction::make()
-                ->exporter(ProductExporter::class)
-                ->modalHeading(__('filament-shop::default.products.export_heading'))
-                ->fileName(fn (Export $export): string => "products-{$export->getKey()}.csv")
-                ->label(__('filament-shop::default.products.export_label')),
+            // Actions\ExportAction::make()
+            //     ->exporter(ProductExporter::class)
+            //     ->modalHeading(__('filament-shop::default.products.export_heading'))
+            //     ->fileName(fn (Export $export): string => "products-{$export->getKey()}.csv")
+            //     ->label(__('filament-shop::default.products.export_label')),
             Actions\CreateAction::make(),
         ];
     }
