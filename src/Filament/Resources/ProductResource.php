@@ -91,7 +91,6 @@ class ProductResource extends Resource
 
                                 Forms\Components\Group::make([
                                     Forms\Components\TextInput::make('price')
-                                        ->required()
                                         ->label(__('filament-shop::default.products.pricing.price.label'))
                                         ->helperText(__('filament-shop::default.products.main.price.helper_text'))
                                         ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision())
