@@ -204,7 +204,7 @@ return [
             'label' => 'Associations',
             'categories' => [
                 'label' => 'Categories',
-                'helper_text' => 'You need select at least one category.',
+                'helper_text' => 'You need select at least one category. If you don\'t find the category you want, click "+" to add a new one.',
             ],
             'brand' => [
                 'label' => 'Brand',

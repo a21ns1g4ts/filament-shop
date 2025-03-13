@@ -204,7 +204,7 @@ return [
             'label' => 'Associações',
             'categories' => [
                 'label' => 'Categorias',
-                'helper_text' => 'Você precisa selecionar pelo menos uma categoria.',
+                'helper_text' => 'Você precisa selecionar pelo menos uma categoria. Se você não encontrar a categoria desejada, clique em "+" para adicionar uma nova.',
             ],
             'brand' => [
                 'label' => 'Marca',
