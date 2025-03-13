@@ -42,6 +42,15 @@ class Category extends Model implements HasMedia
         'sort' => 'integer',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->slug = Str::slug($model->name);
+        });
+    }
+
     protected static function newFactory()
     {
         return CategoryFactory::new();

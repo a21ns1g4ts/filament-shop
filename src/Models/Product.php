@@ -57,7 +57,16 @@ class Product extends Model implements HasMedia
         parent::boot();
 
         static::creating(function ($model) {
-            $model->slug = Str::slug($model->name);
+            $baseSlug = Str::slug($model->name);
+            $slug = $baseSlug;
+            $count = 1;
+
+            while (static::where('slug', $slug)->exists()) {
+                $slug = $baseSlug . '-' . $count;
+                $count++;
+            }
+
+            $model->slug = $slug;
         });
     }
 
