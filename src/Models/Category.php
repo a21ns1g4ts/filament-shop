@@ -47,8 +47,17 @@ class Category extends Model implements HasMedia
     {
         parent::boot();
 
-        static::creating(function ($model) {
-            $model->slug = Str::slug($model->name);
+        static::saving(function ($model) {
+            $baseSlug = Str::slug($model->name);
+            $slug = $baseSlug;
+            $count = 2;
+
+            while (static::where('slug', $slug)->where('id', '!=', $model->id)->exists()) {
+                $slug = $baseSlug . '-' . $count;
+                $count++;
+            }
+
+            $model->slug = $slug;
         });
     }
 
