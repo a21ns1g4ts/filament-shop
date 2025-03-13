@@ -144,6 +144,7 @@ class ProductResource extends Resource
                                     ->hint(__('filament-shop::default.products.main.images.hint'))
                                     ->image()
                                     ->reorderable()
+                                    ->panelLayout('grid')
                                     ->downloadable()
                                     ->openable()
                                     ->multiple()
