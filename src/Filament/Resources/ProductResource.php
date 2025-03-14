@@ -250,37 +250,42 @@ class ProductResource extends Resource
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
 
-                                        Forms\Components\TextInput::make('slug')
-                                            ->label(__('filament-shop::default.brands.main.slug.label'))
-                                            ->disabled()
-                                            ->dehydrated()
-                                            ->required()
-                                            ->maxLength(255),
+                                        // Forms\Components\TextInput::make('slug')
+                                        //     ->label(__('filament-shop::default.brands.main.slug.label'))
+                                        //     ->disabled()
+                                        //     ->dehydrated()
+                                        //     ->required()
+                                        //     ->maxLength(255),
 
-                                        Forms\Components\TextInput::make('website')
-                                            ->label(__('filament-shop::default.brands.main.website.label'))
-                                            ->maxLength(255)
-                                            ->url(),
+                                        // Forms\Components\TextInput::make('website')
+                                        //     ->label(__('filament-shop::default.brands.main.website.label'))
+                                        //     ->maxLength(255)
+                                        //     ->url(),
 
-                                        Forms\Components\Toggle::make('active')
-                                            ->label(__('filament-shop::default.brands.main.active.label'))
-                                            ->default(true),
+                                        // Forms\Components\Toggle::make('active')
+                                        //     ->label(__('filament-shop::default.brands.main.active.label'))
+                                        //     ->default(true),
 
-                                        Forms\Components\Toggle::make('visible')
-                                            ->label(__('filament-shop::default.brands.main.visible.label'))
-                                            ->default(true),
+                                        // Forms\Components\Toggle::make('visible')
+                                        //     ->label(__('filament-shop::default.brands.main.visible.label'))
+                                        //     ->default(true),
 
-                                        Forms\Components\RichEditor::make('description')
-                                            // TODO: add support for file attachments compatible with s3 storage
-                                            ->disableToolbarButtons([
-                                                'attachFiles',
-                                            ])
-                                            ->label(__('filament-shop::default.brands.main.description.label')),
+                                        // Forms\Components\RichEditor::make('description')
+                                        //     // TODO: add support for file attachments compatible with s3 storage
+                                        //     ->disableToolbarButtons([
+                                        //         'attachFiles',
+                                        //     ])
+                                        //     ->label(__('filament-shop::default.brands.main.description.label')),
                                     ])
                                     ->createOptionAction(function (Action $action) {
                                         return $action
                                             ->modalHeading(__('filament-shop::default.brands.create_new'))
                                             ->modalSubmitActionLabel(__('filament-shop::default.common.create'))
+                                            ->mutateFormDataUsing(fn (array $data) => [
+                                                'active' => true,
+                                                'visible' => true,
+                                                ...$data,
+                                            ])
                                             ->modalWidth('lg');
                                     }),
                             ]),

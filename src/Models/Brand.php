@@ -7,6 +7,7 @@ use A21ns1g4ts\FilamentShop\FilamentShop;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -39,6 +40,24 @@ class Brand extends Model implements HasMedia
         'active' => 'boolean',
         'visible' => 'boolean',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            $baseSlug = Str::slug($model->name);
+            $slug = $baseSlug;
+            $count = 2;
+
+            while (static::where('slug', $slug)->where('id', '!=', $model->id)->exists()) {
+                $slug = $baseSlug . '-' . $count;
+                $count++;
+            }
+
+            $model->slug = $slug;
+        });
+    }
 
     protected static function newFactory()
     {
