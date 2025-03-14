@@ -192,7 +192,6 @@ class ProductResource extends Resource
                                     ->relationship('categories', 'name')
                                     ->preload()
                                     ->multiple()
-                                    ->required()
                                     ->hiddenOn(ProductsRelationManager::class)
                                     ->createOptionForm([
                                         Forms\Components\TextInput::make('name')
