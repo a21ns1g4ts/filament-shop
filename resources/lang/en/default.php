@@ -122,7 +122,7 @@ return [
             ],
             'images' => [
                 'label' => 'Images',
-                'hint' => 'Add no more than 20 images.',
+                'hint' => 'Add no more than 20 images. Up to 10MB per image.',
             ],
             'created_at' => [
                 'label' => 'Created at',
