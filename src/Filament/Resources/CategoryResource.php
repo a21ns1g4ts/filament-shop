@@ -136,16 +136,16 @@ class CategoryResource extends Resource
                                         Forms\Components\TextInput::make('name')
                                             ->label(__('filament-shop::default.categories.main.name.label'))
                                             ->required()
-                                            ->maxLength(255)
-                                            ->live(onBlur: true)
-                                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
-
-                                        Forms\Components\TextInput::make('slug')
-                                            ->label(__('filament-shop::default.categories.main.slug.label'))
-                                            ->disabled()
-                                            ->dehydrated()
-                                            ->required()
                                             ->maxLength(255),
+                                        //  ->live(onBlur: true)
+                                        //  ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+
+                                        // Forms\Components\TextInput::make('slug')
+                                        //     ->label(__('filament-shop::default.categories.main.slug.label'))
+                                        //     ->disabled()
+                                        //     ->dehydrated()
+                                        //     ->required()
+                                        //     ->maxLength(255),
                                     ]),
 
                                 Forms\Components\Select::make('parent_id')

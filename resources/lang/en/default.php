@@ -139,8 +139,8 @@ return [
                 'helper_text' => 'The price of the product.',
             ],
             'original_price' => [
-                'label' => 'Compare at price',
-                'helper_text' => 'To remove it, disable the offer.',
+                'label' => 'Original price',
+                'helper_text' => 'The original price of the product.',
             ],
             'cost' => [
                 'label' => 'Cost',
@@ -150,6 +150,7 @@ return [
                 'label' => 'Offer',
                 'discount' => 'Discount',
                 'add' => 'Add offer',
+                'new_price' => 'New price',
                 'remove' => 'Remove offer',
                 'notifications' => [
                     'added' => [

@@ -29,7 +29,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
-use Illuminate\Support\Str;
 use RalphJSmit\Filament\SEO\SEO;
 
 class ProductResource extends Resource
@@ -77,17 +76,15 @@ class ProductResource extends Resource
                                     ->label(__('filament-shop::default.products.main.name.label'))
                                     ->required()
                                     ->maxLength(255)
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state)))
                                     ->columnSpanFull(),
 
-                                Forms\Components\TextInput::make('slug')
-                                    ->label(__('filament-shop::default.products.main.slug.label'))
-                                    ->disabled()
-                                    ->dehydrated()
-                                    ->required()
-                                    ->maxLength(255)
-                                    ->columnSpanFull(),
+                                // Forms\Components\TextInput::make('slug')
+                                //     ->label(__('filament-shop::default.products.main.slug.label'))
+                                //     ->disabled()
+                                //     ->dehydrated()
+                                //     ->required()
+                                //     ->maxLength(255)
+                                //     ->columnSpanFull(),
 
                                 Forms\Components\Group::make([
                                     Forms\Components\TextInput::make('price')
@@ -98,6 +95,7 @@ class ProductResource extends Resource
 
                                     Forms\Components\TextInput::make('original_price')
                                         ->disabled()
+                                        ->visible(fn (?Product $record) => $record?->original_price)
                                         ->label(__('filament-shop::default.products.pricing.original_price.label'))
                                         ->helperText(__('filament-shop::default.products.pricing.original_price.helper_text'))
                                         ->currencyMask(FilamentShop::getThousandSeparator(), FilamentShop::getDecimalSeparator(), FilamentShop::getDecimalPrecision())
@@ -148,7 +146,7 @@ class ProductResource extends Resource
                                     ->downloadable()
                                     ->openable()
                                     ->multiple()
-                                    ->maxSize(2 * 1024)
+                                    ->maxSize(3 * 1024)
                                     ->maxFiles(20)
                                     ->hiddenLabel(),
                             ])
@@ -197,9 +195,7 @@ class ProductResource extends Resource
                                         Forms\Components\TextInput::make('name')
                                             ->label(__('filament-shop::default.categories.main.name.label'))
                                             ->required()
-                                            ->maxLength(255)
-                                            ->live(onBlur: true)
-                                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                            ->maxLength(255),
                                         // Forms\Components\TextInput::make('slug')
                                         //     ->label(__('filament-shop::default.categories.main.slug.label'))
                                         //     ->disabled()
@@ -245,9 +241,7 @@ class ProductResource extends Resource
                                         Forms\Components\TextInput::make('name')
                                             ->label(__('filament-shop::default.brands.main.name.label'))
                                             ->required()
-                                            ->maxLength(255)
-                                            ->live(onBlur: true)
-                                            ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                                            ->maxLength(255),
 
                                         // Forms\Components\TextInput::make('slug')
                                         //     ->label(__('filament-shop::default.brands.main.slug.label'))

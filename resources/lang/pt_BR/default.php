@@ -140,7 +140,7 @@ return [
             ],
             'original_price' => [
                 'label' => 'Preço original',
-                'helper_text' => 'Para remover desabilite a oferta',
+                'helper_text' => 'O preço original do produto. Para restaurar o preço original, clique em "Remover Oferta".',
             ],
             'cost' => [
                 'label' => 'Custo',
@@ -150,6 +150,7 @@ return [
                 'label' => 'Oferta',
                 'discount' => 'Desconto',
                 'add' => 'Adicionar oferta',
+                'new_price' => 'Novo preço',
                 'remove' => 'Remover oferta',
                 'notifications' => [
                     'added' => [
@@ -188,7 +189,7 @@ return [
             'label' => 'Status',
             'visible' => [
                 'label' => 'Visível',
-                'helper_text' => 'Este produto será ocultado de todos os canais de vendas.',
+                'helper_text' => 'Altere a visibilidade do produto. Quando desativado, o produto será ocultado da loja.',
             ],
             'pinned' => [
                 'label' => 'Fixado',
