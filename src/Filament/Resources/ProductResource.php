@@ -146,7 +146,6 @@ class ProductResource extends Resource
                                     ->downloadable()
                                     ->openable()
                                     ->multiple()
-                                    ->maxSize(10 * 1024)
                                     ->maxFiles(20)
                                     ->hiddenLabel(),
                             ])
