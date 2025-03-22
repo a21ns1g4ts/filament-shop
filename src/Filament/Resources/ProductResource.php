@@ -103,14 +103,18 @@ class ProductResource extends Resource
                                 ])
                                     ->columnSpanFull()
                                     ->columns(2),
-
-                                Forms\Components\RichEditor::make('description')
-                                    // TODO: add support for file attachments compatible with s3 storage
-                                    ->disableToolbarButtons([
-                                        'attachFiles',
-                                    ])
-                                    ->label(__('filament-shop::default.products.main.description.label'))
-                                    ->columnSpanFull(),
+                                \AmidEsfahani\FilamentTinyEditor\TinyEditor::make('description')
+                                    ->label('Descrição')
+                                    ->helperText('Você pode usar o assistente para preencher este campo automaticamente com base no nome do produto.')
+                                    ->profile('default')
+                                    ->columnSpan('full'),
+                                // Forms\Components\RichEditor::make('description')
+                                //     // TODO: add support for file attachments compatible with s3 storage
+                                //     ->disableToolbarButtons([
+                                //         'attachFiles',
+                                //     ])
+                                //     ->label(__('filament-shop::default.products.main.description.label'))
+                                //     ->columnSpanFull(),
                             ])
                             ->columns(2),
 
