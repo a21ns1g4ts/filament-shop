@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
+use Illuminate\Validation\Rule;
 use RalphJSmit\Filament\SEO\SEO;
 
 class ProductResource extends Resource
@@ -198,6 +199,7 @@ class ProductResource extends Resource
                                         Forms\Components\TextInput::make('name')
                                             ->label(__('filament-shop::default.categories.main.name.label'))
                                             ->required()
+                                            ->rules([Rule::unique(config('filament-shop.categories.model'), 'name')])
                                             ->maxLength(255),
                                         // Forms\Components\TextInput::make('slug')
                                         //     ->label(__('filament-shop::default.categories.main.slug.label'))
