@@ -17,7 +17,6 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use RalphJSmit\Filament\SEO\SEO;
 
 class CategoryResource extends Resource
@@ -137,7 +136,7 @@ class CategoryResource extends Resource
                                         Forms\Components\TextInput::make('name')
                                             ->label(__('filament-shop::default.categories.main.name.label'))
                                             ->required()
-                                            ->rules([Rule::unique(config('filament-shop.categories.model'), 'name')])
+                                            ->unique(ignoreRecord: true)
                                             ->maxLength(255),
                                         //  ->live(onBlur: true)
                                         //  ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
