@@ -198,7 +198,7 @@ class ProductResource extends Resource
                                         Forms\Components\TextInput::make('name')
                                             ->label(__('filament-shop::default.categories.main.name.label'))
                                             ->required()
-                                            ->unique(ignoreRecord: true)
+                                            ->unique(ignoreRecord: true, modifyRuleUsing: fn ($rule) => $rule->where('company_id', filament()->getTenant()->id))
                                             ->maxLength(255),
                                         // Forms\Components\TextInput::make('slug')
                                         //     ->label(__('filament-shop::default.categories.main.slug.label'))
@@ -244,7 +244,7 @@ class ProductResource extends Resource
                                     ->createOptionForm([
                                         Forms\Components\TextInput::make('name')
                                             ->label(__('filament-shop::default.brands.main.name.label'))
-                                            ->unique(ignoreRecord: true)
+                                            ->unique(ignoreRecord: true, modifyRuleUsing: fn ($rule) => $rule->where('company_id', filament()->getTenant()->id))
                                             ->required()
                                             ->maxLength(255),
 
@@ -299,14 +299,14 @@ class ProductResource extends Resource
                                 Forms\Components\TextInput::make('sku')
                                     ->label(__('filament-shop::default.products.inventory.sku.label'))
                                     ->helperText(__('filament-shop::default.products.inventory.sku.helper_text'))
-                                    ->unique(Product::class, 'sku', ignoreRecord: true)
+                                    ->unique(Product::class, 'sku', ignoreRecord: true, modifyRuleUsing: fn ($rule) => $rule->where('company_id', filament()->getTenant()->id))
                                     ->maxLength(255)
                                     ->columnSpanFull(),
 
                                 Forms\Components\TextInput::make('barcode')
                                     ->label(__('filament-shop::default.products.inventory.barcode.label'))
                                     ->helperText(__('filament-shop::default.products.inventory.barcode.helper_text'))
-                                    ->unique(Product::class, 'barcode', ignoreRecord: true)
+                                    ->unique(Product::class, 'barcode', ignoreRecord: true, modifyRuleUsing: fn ($rule) => $rule->where('company_id', filament()->getTenant()->id))
                                     ->maxLength(255)
                                     ->columnSpanFull(),
 

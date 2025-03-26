@@ -136,7 +136,7 @@ class CategoryResource extends Resource
                                         Forms\Components\TextInput::make('name')
                                             ->label(__('filament-shop::default.categories.main.name.label'))
                                             ->required()
-                                            ->unique(ignoreRecord: true)
+                                            ->unique(ignoreRecord: true, modifyRuleUsing: fn ($rule) => $rule->where('company_id', filament()->getTenant()->id))
                                             ->maxLength(255),
                                         //  ->live(onBlur: true)
                                         //  ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $set('slug', Str::slug($state))),
